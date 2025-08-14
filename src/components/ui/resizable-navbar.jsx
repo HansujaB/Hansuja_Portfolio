@@ -196,7 +196,7 @@ export const NavbarLogo = () => {
       href="#"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black">
       <span className="text-lg bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600
-               bg-clip-text text-transparent font-extrabold tracking-wide">Hansuja Budhiraja</span>
+               bg-clip-text text-transparent font-extrabold tracking-wide">Hansuja's Portfolio</span>
     </a>
   );
 };

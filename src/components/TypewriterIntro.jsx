@@ -4,21 +4,22 @@ import { TypewriterEffect } from "./ui/Typewriter-effect";
 export function TypewriterEffectDemo() {
   const words = [
     {
-      text: "Build",
+      text: "Hi",
     },
     {
-      text: "awesome",
+      text: "I",
     },
     {
-      text: "apps",
+      text: "am",
     },
     {
-      text: "with",
-    },
-    {
-      text: "Aceternity.",
-      className: "text-blue-500 dark:text-blue-500",
-    },
+  text: "Hansuja",
+  className: "text-pink-500 drop-shadow-[0_0_5px_#ff00ff] drop-shadow-[0_0_15px_#ff00ff]"
+},
+{
+  text: "Budhiraja",
+  className: "text-pink-500 drop-shadow-[0_0_5px_#ff00ff] drop-shadow-[0_0_15px_#ff00ff]"
+}
   ];
   return (
     <div className="flex flex-col items-center justify-center h-[40rem] ">
