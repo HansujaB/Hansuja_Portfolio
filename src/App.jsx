@@ -4,7 +4,6 @@ import Home from './components/Home'
 import { NavbarDemo } from "./components/Navbar";
 import { TypewriterEffectDemo } from "./components/TypewriterIntro";
 import Model from './components/Model3d'
-import { CometCardDemo } from './components/Card';
 import SkillsShowcase from './components/Skills';
 function App() {
   return (
@@ -17,9 +16,6 @@ function App() {
         <NavbarDemo />
       </div>
       <TypewriterEffectDemo />
-      {/* <div className='relative z-20'>
-        
-      </div> */}
       <SkillsShowcase />
     </>
   )
