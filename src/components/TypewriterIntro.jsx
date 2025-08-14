@@ -1,6 +1,6 @@
 "use client";
 import { TypewriterEffect } from "./ui/Typewriter-effect";
-
+import { Github, Linkedin } from "lucide-react";
 export function TypewriterEffectDemo() {
   const words = [
     {
@@ -26,7 +26,30 @@ export function TypewriterEffectDemo() {
       <TypewriterEffect words={words} />
       <p className="text-neutral-600 dark:text-neutral-200 text-lg  m-10">
         This is my corner away from chaos.
-      </p>      
+      </p>
+       <div className="flex space-x-4">
+  {/* GitHub */}
+  <a 
+    href="https://github.com/HansujaB" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Github 
+      className="text-white hover:text-purple-700 transition-colors duration-300" 
+      size={40} 
+    />
+  </a>
+  <a 
+    href="https://www.linkedin.com/in/hansuja-budhiraja-976a382a0/" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    <Linkedin 
+      className="text-white hover:text-purple-700 transition-colors duration-300" 
+      size={40} 
+    />
+  </a>
+</div>
       <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
   {/* Purple gradient button */}
   <button

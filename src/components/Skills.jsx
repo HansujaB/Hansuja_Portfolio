@@ -144,10 +144,10 @@ const SkillCard = ({ skill }) => {
         <div className="flex flex-col justify-center flex-1 space-y-4">          
           {/* Title */}
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-white font-mono mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2">
               {skill.title}
             </h3>
-            <p className="text-lg text-white opacity-75 font-mono">
+            <p className="text-lg text-white opacity-75 ">
               {skill.description}
             </p>
           </div>
@@ -173,7 +173,7 @@ export default function SkillsShowcase() {
           transition={{ duration: 0.6 }}
           className="mb-16 text-center"
         >
-          <h1 className="mb-4 py-4 text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="mb-4 py-4 text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-wide">
             My Skills
           </h1>
         </motion.div>

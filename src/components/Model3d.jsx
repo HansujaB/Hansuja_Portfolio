@@ -8,7 +8,7 @@ function ModelContent() {
   
   useFrame((_, delta) => {
     if (modelRef.current) {
-      modelRef.current.rotation.y += delta * 0.2; // slower rotation
+      modelRef.current.rotation.y += delta * 0.2;
     }
   });
   
