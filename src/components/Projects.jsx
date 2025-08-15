@@ -90,12 +90,12 @@ export default function ProjectsCarousel() {
         
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent mb-4">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
             My Projects
           </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+          {/* <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             A showcase of my recent work and creative solutions
-          </p>
+          </p> */}
         </div>
 
         {/* Carousel Container */}
@@ -152,13 +152,13 @@ export default function ProjectsCarousel() {
           </div>
 
           {/* Auto-play Toggle */}
-          <div className="text-center mt-4">
+          {/* <div className="text-center mt-4">
             <button
               onClick={() => setIsAutoPlaying(!isAutoPlaying)}
               className="text-gray-400 hover:text-white text-sm transition-colors">
               {isAutoPlaying ? "⏸️ Pause" : "▶️ Play"} Auto-slide
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

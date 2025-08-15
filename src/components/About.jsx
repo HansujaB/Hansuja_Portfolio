@@ -11,8 +11,8 @@ export function BackgroundBoxesDemo() {
       <div
         className="absolute inset-0 w-full h-full bg-slate-900 z-20 [mask-image:radial-gradient(transparent,white)] pointer-events-none" />
       <Boxes />
-      <h1 className={cn("md:text-4xl text-2xl text-bold mb-20 text-white relative z-20")}>
-        ABOUT ME
+      <h1 className={cn("md:text-5xl text-2xl font-bold mb-20 text-white relative z-20 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600")}>
+        About Me
       </h1>
       <p className="w-5/6 text-center mt-2 text-neutral-300 relative z-20">
         I am currently second year undergrad at Indira Gandhi Delhi Technical University for women. I have explored ML/DL , Langchain , Mern Stack and DSA in Java. I have participated in over 25+ ideathons and hackathons. 
