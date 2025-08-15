@@ -15,7 +15,7 @@ export function BackgroundBoxesDemo() {
               <div className="w-full h-full bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center text-white text-6xl font-bold">
               </div>
               <img 
-                src="./assets/img.jpg" 
+                src="./src/assets/img.jpg" 
                 alt="Hansuja" 
                 className="w-full h-full object-cover"
               />
