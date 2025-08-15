@@ -19,13 +19,13 @@ export function BackgroundBoxesDemo() {
         <p className="w-full sm:w-5/6 text-sm sm:text-base text-center mt-2 text-neutral-300 relative z-20 leading-relaxed">
   I am a 
   <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> second-year undergraduate student </span>
-  at Indira Gandhi Delhi Technical University for Women, pursuing a deep interest in technology and innovation.
+  at Indira Gandhi Delhi Technical University for Women, pursuing <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]">CSE-AI</span> .
   My journey so far has led me to explore 
   <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]">Machine Learning, Deep Learning, LangChain, MERN Stack, 
   and Data Structures & Algorithms in Java</span> , enabling me to build both analytical and development skills.
   Over the past year, I have actively participated in 
-  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> 25+ ideathons and hackathons, </span>
-  where I have worked on diverse problem statements, collaborated with talented teams, and honed my ability to deliver impactful solutions under tight deadlines.
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> 20+ ideathons and hackathons, </span>
+  where I have worked on diverse problem statements, collaborated , and honed my ability to deliver impactful solutions under tight deadlines.
 
   At present, I am expanding my expertise in 
   <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> web development and deep learning, </span>
