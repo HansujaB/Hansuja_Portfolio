@@ -96,32 +96,32 @@ const CometCard = ({
 const skills = [
   {
     title: "Frontend Development",
-    description: "React, Next.js, TypeScript",
+    description: "React.js ,TypeScript,JavaScript, Tailwind CSS , HTML5 , CSS3",
     gradient: "from-purple-500 to-pink-500"
   },
   {
     title: "UI/UX Design",
-    description: "Figma, Adobe Creative Suite",
+    description: "Figma,Wix Studio",
     gradient: "from-pink-500 to-fuchsia-500"
   },
   {
     title: "Backend Development",
-    description: "Node.js, Express, MongoDB",
+    description: "Flask, Node.js, MongoDB, Supabase",
     gradient:"from-violet-500 to-purple-600"
   },
   {
-    title: "Mobile Development",
-    description: "React Native, Flutter",
+    title: "Version Control & Deployment",
+    description: "Git, Github, Render, Vercel",
     gradient: "from-indigo-500 to-purple-500"
   },
   {
-    title: "DevOps & Cloud",
-    description: "AWS, Docker, CI/CD",
+    title: "DevOps & Tools",
+    description: "AWS, Docker,CI/CD, Firebase,Clerk",
     gradient: "from-purple-600 to-indigo-500"
   },
   {
-    title: "Data Science",
-    description: "Machine Learning, Analytics",
+    title: "ML/DL",
+    description: "LangChain,Scikit-Learn, Numpy , Pandas , Tensorflow , Pytorch ,Core ML/DL Algorithms ",
     gradient: "from-fuchsia-500 to-violet-500"
   }
 ];
