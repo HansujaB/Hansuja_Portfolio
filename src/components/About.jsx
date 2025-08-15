@@ -17,17 +17,36 @@ export function BackgroundBoxesDemo() {
           About Me
         </h1>
         <p className="w-full sm:w-5/6 text-sm sm:text-base text-center mt-2 text-neutral-300 relative z-20 leading-relaxed">
-          I am currently a second-year undergrad at Indira Gandhi Delhi Technical University for Women. I have explored ML/DL, LangChain, MERN Stack, and DSA in Java. I have participated in over 25+ ideathons and hackathons. 
-          I am currently working on my skills in web development and Deep Learning. I am always up for learning new things and exploring new technologies.
-          Apart from that, I love to watch movies and explore new places. Right now, I am working on a few personal projects, a research paper, and practicing DSA.
-          Connect with me on{" "}
-          <a
-            href="https://codolio.com/profile/HansujaB"
-            className="text-fuchsia-400 hover:text-fuchsia-300 transition-colors"
-          >
-            Codilio
-          </a>
-        </p>
+  I am a 
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> second-year undergraduate student </span>
+  at Indira Gandhi Delhi Technical University for Women, pursuing a deep interest in technology and innovation.
+  My journey so far has led me to explore 
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]">Machine Learning, Deep Learning, LangChain, MERN Stack, 
+  and Data Structures & Algorithms in Java</span> , enabling me to build both analytical and development skills.
+  Over the past year, I have actively participated in 
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> 25+ ideathons and hackathons, </span>
+  where I have worked on diverse problem statements, collaborated with talented teams, and honed my ability to deliver impactful solutions under tight deadlines.
+
+  At present, I am expanding my expertise in 
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> web development and deep learning, </span>
+   while simultaneously working on several personal projects and contributing to a research paper.
+  I have a strong passion for 
+  <span className="font-bold text-white drop-shadow-[0_0_3px_#ffffff]"> exploring emerging technologies </span>
+  and experimenting with creative approaches to real-world challenges.
+  My learning philosophy revolves around curiosity, adaptability, and the belief that growth comes from stepping beyond comfort zones.
+
+  Outside the academic sphere, I enjoy watching movies, exploring new places, and seeking experiences that broaden my perspective.
+  I thrive in collaborative environments that challenge me to think differently and push boundaries.
+
+  Connect with me on{" "}
+  <a
+    href="https://codolio.com/profile/HansujaB"
+    className="font-bold text-white drop-shadow-[0_0_3px_#ffffff] hover:text-fuchsia-300 transition-colors"
+  >
+    Codolio
+  </a>.
+</p>
+
       </div>
     </div>
   );

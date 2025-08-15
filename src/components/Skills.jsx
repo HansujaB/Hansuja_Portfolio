@@ -94,6 +94,11 @@ const CometCard = ({
 };
 
 const skills = [
+    {
+    title: "Languages",
+    description: "Python , Java , C++",
+    gradient: "from-purple-600 to-indigo-500"
+  },
   {
     title: "Frontend Development",
     description: "React.js ,TypeScript,JavaScript, Tailwind CSS , HTML5 , CSS3",
@@ -110,14 +115,9 @@ const skills = [
     gradient:"from-violet-500 to-purple-600"
   },
   {
-    title: "Version Control & Deployment",
-    description: "Git, Github, Render, Vercel",
+    title: "Version Control & Tools",
+    description: "Git, Github, Render, Vercel,AWS, Docker,CI/CD, Firebase,Clerk",
     gradient: "from-indigo-500 to-purple-500"
-  },
-  {
-    title: "DevOps & Tools",
-    description: "AWS, Docker,CI/CD, Firebase,Clerk",
-    gradient: "from-purple-600 to-indigo-500"
   },
   {
     title: "ML/DL",
@@ -126,8 +126,6 @@ const skills = [
   }
 ];
 
-
-// Individual Skill Card Component
 const SkillCard = ({ skill }) => {
   return (
     <CometCard className="w-full">
