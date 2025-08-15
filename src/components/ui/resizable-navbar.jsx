@@ -93,7 +93,11 @@ export const NavItems = ({
       {items.map((item, idx) => (
         <a
           onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
+          onClick={(e) => {
+            if (onItemClick) {
+              onItemClick(e, item.link);
+            }
+          }}
           className="relative px-4 py-2 text-lg font-semibold text-neutral-100 dark:text-neutral-300"
           key={`link-${idx}`}
           href={item.link}>
@@ -193,7 +197,7 @@ export const MobileNavToggle = ({
 export const NavbarLogo = () => {
   return (
     <a
-      href="#"
+      href="#home"
       className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black">
       <span className="text-lg bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600
                bg-clip-text text-transparent font-extrabold tracking-wide">Hansuja's Portfolio</span>

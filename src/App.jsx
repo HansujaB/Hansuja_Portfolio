@@ -14,11 +14,11 @@ function App() {
       <div className='fixed top-0 left-0 w-full z-50 py-6 text-lg bg-transparent'>
         <NavbarDemo />
       </div>
-      <TypewriterEffectDemo />
-      < BackgroundBoxesDemo />
-      <SkillsShowcase />
-      <ProjectsCarousel />
-      <ContactSection />
+      <TypewriterEffectDemo id="home" />
+      < BackgroundBoxesDemo id="about" />
+      <SkillsShowcase id="skills"/>
+      <ProjectsCarousel id="projects" />
+      <ContactSection id="contact"/>
     </>
   )
 }
