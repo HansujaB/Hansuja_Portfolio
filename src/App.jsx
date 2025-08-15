@@ -6,6 +6,7 @@ import { TypewriterEffectDemo } from "./components/TypewriterIntro";
 import SkillsShowcase from './components/Skills';
 import ProjectsCarousel from './components/Projects';
 import ContactSection from './components/Contact';
+import { BackgroundBoxesDemo } from './components/About';
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <NavbarDemo />
       </div>
       <TypewriterEffectDemo />
+      < BackgroundBoxesDemo />
       <SkillsShowcase />
       <ProjectsCarousel />
       <ContactSection />
