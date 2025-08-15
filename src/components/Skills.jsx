@@ -101,12 +101,12 @@ const skills = [
   },
   {
     title: "Frontend Development",
-    description: "React.js ,TypeScript,JavaScript, Tailwind CSS , HTML5 , CSS3",
+    description: "React.js ,TypeScript,JavaScript, Tailwind CSS ,Three.js , Motion",
     gradient: "from-purple-500 to-pink-500"
   },
   {
     title: "UI/UX Design",
-    description: "Figma,Wix Studio",
+    description: "Figma, Wix Studio , Prototyping , Canva",
     gradient: "from-pink-500 to-fuchsia-500"
   },
   {
