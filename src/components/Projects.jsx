@@ -59,8 +59,8 @@ export default function ProjectsCarousel() {
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => {
-        const maxIndex = projects.length - 2; // Show 2 cards, so max index is length - 2
-        return prev >= maxIndex ? 0 : prev + 1; // Reset to 0 when reaching the end
+        const maxIndex = projects.length - 2; 
+        return prev >= maxIndex ? 0 : prev + 1;
       });
     }, 5000);
 
@@ -73,13 +73,13 @@ export default function ProjectsCarousel() {
   };
 
   const goToNext = () => {
-    const maxIndex = projects.length - 2; // Show 2 cards, so max index is length - 2
+    const maxIndex = projects.length - 2; 
     setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
     setIsAutoPlaying(false);
   };
 
   const goToSlide = (index) => {
-    const maxIndex = projects.length - 2; // Show 2 cards, so max index is length - 2
+    const maxIndex = projects.length - 2;
     setCurrentIndex(Math.min(index, maxIndex));
     setIsAutoPlaying(false);
   };
@@ -93,9 +93,6 @@ export default function ProjectsCarousel() {
           <h1 className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
             My Projects
           </h1>
-          {/* <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            A showcase of my recent work and creative solutions
-          </p> */}
         </div>
 
         {/* Carousel Container */}
