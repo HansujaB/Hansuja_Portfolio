@@ -34,6 +34,13 @@ export function NavbarDemo() {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Replace with your actual Google Drive file ID
+  const resumeLink = "https://drive.google.com/file/d/1bBHzyh357Y8IMnHIVttS8v_jjWWZiun3/view?usp=sharing";
+
+  const handleResumeClick = () => {
+    window.open(resumeLink, '_blank');
+  };
+
   return (
     <div className="relative w-full">
       <Navbar>
@@ -42,48 +49,51 @@ export function NavbarDemo() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary">Resume</NavbarButton>
+            <NavbarButton 
+              variant="primary" 
+              onClick={handleResumeClick}
+              as="button"
+            >
+              Resume
+            </NavbarButton>
           </div>
         </NavBody>
-
         {/* Mobile Navigation */}
         <MobileNav>
           <MobileNavHeader>
             <NavbarLogo />
             <MobileNavToggle
               isOpen={isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            />
           </MobileNavHeader>
-
           <MobileNavMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)}>
             {navItems.map((item, idx) => (
               <a
                 key={`mobile-link-${idx}`}
                 href={item.link}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="relative text-neutral-600 dark:text-neutral-300">
+                className="relative text-neutral-600 dark:text-neutral-300"
+              >
                 <span className="block">{item.name}</span>
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
               <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleResumeClick();
+                }}
                 variant="primary"
-                className="w-full">
+                className="w-full"
+                as="button"
+              >
                 Resume
               </NavbarButton>
-              {/* <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full">
-                Book a call
-              </NavbarButton> */}
             </div>
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
-      {/* Navbar */}
     </div>
   );
 }
-

@@ -187,30 +187,35 @@ export function TypewriterEffectDemo() {
           </a>
         </div>
 
-        {/* Enhanced Buttons with Icons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button className="group relative overflow-hidden w-44 h-12 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-medium shadow-xl shadow-purple-900/40 hover:shadow-purple-900/60 transition-all duration-300 transform hover:scale-105">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="relative flex items-center justify-center gap-2">
-              <Code className="w-4 h-4" />
-              View Projects
-              <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-pulse"></div>
-            </div>
-          </button>
-          
-          <button className="group relative overflow-hidden w-44 h-12 rounded-xl bg-transparent border-2 border-purple-500 text-purple-300 font-medium shadow-lg shadow-purple-900/30 hover:shadow-purple-900/50 transition-all duration-300 transform hover:scale-105 hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-indigo-800/50 hover:text-white hover:border-purple-400">
-            <div className="flex items-center justify-center gap-2">
-              <Heart className="w-4 h-4 group-hover:animate-pulse group-hover:text-pink-400" />
-              Contact Me
-            </div>
-          </button>
-        </div>
+            <a 
+              href="#projects"
+              className="group relative overflow-hidden w-44 h-12 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 text-white font-medium shadow-xl shadow-purple-900/40 hover:shadow-purple-900/60 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-indigo-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative flex items-center justify-center gap-2">
+                <Code className="w-4 h-4" />
+                View Projects
+                <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-pulse"></div>
+              </div>
+            </a>
+
+            <a 
+              href="#contact"
+              className="group relative overflow-hidden w-44 h-12 rounded-xl bg-transparent border-2 border-purple-500 text-purple-300 font-medium shadow-lg shadow-purple-900/30 hover:shadow-purple-900/50 transition-all duration-300 transform hover:scale-105 hover:bg-gradient-to-r hover:from-purple-800/50 hover:to-indigo-800/50 hover:text-white hover:border-purple-400 flex items-center justify-center"
+            >
+              <div className="flex items-center justify-center gap-2">
+                <Heart className="w-4 h-4 group-hover:animate-pulse group-hover:text-pink-400" />
+                Contact Me
+              </div>
+            </a>
+          </div>
 
         {/* Fun Stats or Additional Info */}
         <div className="mt-8 flex justify-center gap-8 text-xs text-neutral-500">
           <div className="flex flex-col items-center">
             <span className="text-purple-400 font-bold text-lg">20+</span>
-            <span>Hackathons</span>
+            <span>Competitons</span>
           </div>
           <div className="flex flex-col items-center">
             <span className="text-indigo-400 font-bold text-lg">∞</span>

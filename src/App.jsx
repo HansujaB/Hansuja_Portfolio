@@ -7,6 +7,7 @@ import SkillsShowcase from './components/Skills';
 import ProjectsCarousel from './components/Projects';
 import ContactSection from './components/Contact';
 import { BackgroundBoxesDemo } from './components/About';
+
 function App() {
   return (
     <>
@@ -14,11 +15,27 @@ function App() {
       <div className='fixed top-0 left-0 w-full z-50 py-6 text-lg bg-transparent'>
         <NavbarDemo />
       </div>
-      <TypewriterEffectDemo id="home" />
-      < BackgroundBoxesDemo id="about" />
-      <SkillsShowcase id="skills"/>
-      <ProjectsCarousel id="projects" />
-      <ContactSection id="contact"/>
+      
+      {/* Add proper section wrappers with IDs */}
+      <section id="home">
+        <TypewriterEffectDemo />
+      </section>
+      
+      <section id="about">
+        <BackgroundBoxesDemo />
+      </section>
+      
+      <section id="skills">
+        <SkillsShowcase />
+      </section>
+      
+      <section id="projects">
+        <ProjectsCarousel />
+      </section>
+      
+      <section id="contact">
+        <ContactSection />
+      </section>
     </>
   )
 }
