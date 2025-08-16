@@ -89,8 +89,8 @@ export default function ProjectsCarousel() {
       <div className="max-w-7xl mx-auto px-4">
         
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
+        <div className="text-center mb-6">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent leading-normal">
             My Projects
           </h1>
         </div>
@@ -126,7 +126,6 @@ export default function ProjectsCarousel() {
             </div>
           </div>
 
-          {/* Dots Indicator */}
           <div className="flex justify-center mt-8 space-x-2">
             {Array.from({ length: projects.length - 1 }).map((_, index) => (
               <button
@@ -147,15 +146,6 @@ export default function ProjectsCarousel() {
               Showing {currentIndex + 1}-{Math.min(currentIndex + 2, projects.length)} of {projects.length}
             </span>
           </div>
-
-          {/* Auto-play Toggle */}
-          {/* <div className="text-center mt-4">
-            <button
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              className="text-gray-400 hover:text-white text-sm transition-colors">
-              {isAutoPlaying ? "⏸️ Pause" : "▶️ Play"} Auto-slide
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
