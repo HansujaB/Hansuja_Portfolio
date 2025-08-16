@@ -26,7 +26,7 @@ export function BackgroundBoxesDemo() {
 
         <div className="relative z-20 flex-1 text-center lg:text-left">
           <h1 className={cn(
-            "text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white relative z-20 bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600"
+            "text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-white relative z-20 bg-clip-text bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600"
           )}>
             Hey there!
           </h1>

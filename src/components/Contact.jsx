@@ -205,7 +205,7 @@ export default function ContactSection() {
             <div className="space-y-6">
               {/* Name Field */}
               <div className="group">
-                <label htmlFor="name" className="block text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
+                <label htmlFor="name" className="text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
                   Your full name?
                 </label>
                 <input
@@ -224,7 +224,7 @@ export default function ContactSection() {
 
               {/* Email Field */}
               <div className="group">
-                <label htmlFor="email" className="block text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
+                <label htmlFor="email" className=" text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
                   Your email address
                 </label>
                 <input
@@ -243,7 +243,7 @@ export default function ContactSection() {
 
               {/* Message Field */}
               <div className="group">
-                <label htmlFor="message" className="block text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
+                <label htmlFor="message" className=" text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
                   Your message
                 </label>
                 <textarea
