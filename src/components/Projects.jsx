@@ -4,48 +4,48 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution built with React and Node.js",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=2560&auto=format&fit=crop",
-    demoLink: "https://demo1.com",
-    githubLink: "https://github.com/user/project1",
-    technologies: ["React", "Node.js", "MongoDB"]
+    title: "FinBuddy",
+    description: "FinBuddy is a modern FinTech web application developed during a Google Developer Student Clubs (GDSC) Hackathon.",
+    image: "FinBuddy.png",
+    demoLink: "https://gdsc-hackk.vercel.app/",
+    githubLink: "https://github.com/HansujaB/FinTech-gdsc-Hackathon",
+    technologies: ["React.js","Node.js", "Tailwind CSS", "MongoDB","Chart.js"]
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "Collaborative project management tool with real-time updates",
-    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?q=80&w=2560&auto=format&fit=crop",
-    demoLink: "https://demo2.com",
-    githubLink: "https://github.com/user/project2",
-    technologies: ["Next.js", "TypeScript", "PostgreSQL"]
+    title: "Hirrd",
+    description: "A full-stack job portal for recruiters and candidates , tracks applications and job postings in real time.",
+    image: "Hirrd.png",
+    demoLink: "hirrd-pi-blond.vercel.app",
+    githubLink: "https://github.com/HansujaB/Project_Hirrd",
+    technologies: ["React.js", "Tailwind CSS", "Supabase", "Clerk"]
   },
   {
     id: 3,
-    title: "Weather Dashboard",
-    description: "Beautiful weather app with location-based forecasts",
-    image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?q=80&w=2560&auto=format&fit=crop",
-    demoLink: "https://demo3.com",
-    githubLink: "https://github.com/user/project3",
-    technologies: ["Vue.js", "API Integration", "Charts.js"]
+    title: "SMS Spam Classifier",
+    description: "SMS Spam Classifier leverages machine learning and NLP to analyze and predict whether a given SMS message is spam. ",
+    image: "SpamClassifier.png",
+    demoLink: "https://sms-spam-classifier-n3ea.onrender.com",
+    githubLink: "https://github.com/HansujaB/SMS_spam_classifier",
+    technologies: ["Stremalit", "Python", "NLP", "Multinomial Naive Bais", "Render"]
   },
   {
     id: 4,
-    title: "Social Media Analytics",
-    description: "Dashboard for tracking social media performance metrics",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2560&auto=format&fit=crop",
-    demoLink: "https://demo4.com",
-    githubLink: "https://github.com/user/project4",
-    technologies: ["React", "D3.js", "Express.js"]
+    title: "TinyStories SLM Model",
+    description: "This project implements a small language model (SLM) inspired by GPT-2, trained from scratch on the TinyStories dataset to generate stories for 3-4 yr olds. ",
+    image: "SLM.png",
+    demoLink: "",
+    githubLink: "https://github.com/HansujaB/Small-Language-Model-Tiny-Stories",
+    technologies: ["Transformers", "Pytorch", "SLM"]
   },
   {
     id: 5,
-    title: "Mobile Banking App",
-    description: "Secure mobile banking solution with biometric authentication",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2560&auto=format&fit=crop",
-    demoLink: "https://demo5.com",
-    githubLink: "https://github.com/user/project5",
-    technologies: ["React Native", "Firebase", "Stripe API"]
+    title: "Whatsapp Chat Analyzer",
+    description: "A powerful tool that extracts and visualizes insights from exported WhatsApp chat data. This project analyzes message trends, identifies the most active users, generates word clouds, performs emoji analysis, and maps user activity across time.",
+    image: "WCA.png",
+    demoLink: "https://whatsapp-chat-analyser-2nbu.onrender.com",
+    githubLink: "https://github.com/HansujaB/Whatsapp-Chat-Analyser",
+    technologies: ["Python", "StreamLit","NLP","Matplotlib", "Render"]
   }
 ];
 
