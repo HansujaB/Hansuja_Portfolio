@@ -20,6 +20,7 @@ Deployed on **Vercel** for fast and reliable hosting.
 ## 📂 Sections
 
 - **Home** – Intro and highlights  
-- **About** – Personal description & background  
+- **About** – Personal description & background
+- **Skills** – Skills I am honing 
 - **Projects** – Showcasing my work  
 - **Contact** – Easy ways to reach me  
