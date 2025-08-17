@@ -35,7 +35,7 @@ export default function CyberpunkBackground() {
       <div className="absolute inset-0 bg-black" />
       
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-900/50 via-gray-900 to-purple-900/40" />
+      <div className="absolute inset-0 black" />
       
       {/* Primary Grid for Depth */}
       <motion.div 
@@ -153,7 +153,7 @@ export default function CyberpunkBackground() {
       />
 
       {/* Additional Glowing Orbs */}
-      <motion.div
+      {/* <motion.div
         className="absolute top-16 right-1/3 w-60 h-60 rounded-full blur-2xl"
         style={{
           background: 'radial-gradient(circle, rgba(147, 51, 234, 0.35) 0%, transparent 70%)'
@@ -209,7 +209,7 @@ export default function CyberpunkBackground() {
           x: { duration: 0.75, ease: "easeOut" },
           y: { duration: 0.75, ease: "easeOut" }
         }}
-      />
+      /> */}
 
       <motion.div
         className="absolute top-1/3 left-16 w-36 h-36 rounded-full blur-lg"

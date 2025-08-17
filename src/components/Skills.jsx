@@ -1,205 +1,184 @@
-"use client";
-import React, { useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useMotionTemplate,
-} from "framer-motion";
+import React, { useState, useCallback } from "react";
 
-// CometCard component
-const CometCard = ({
-  rotateDepth = 17.5,
-  translateDepth = 20,
-  className = "",
-  children
-}) => {
-  const ref = useRef(null);
+// Optimized SkillCard with lighter animations
+const SkillCard = ({ skill, index }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const handleMouseMove = useCallback((e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
+    setMousePos({ x, y });
+  }, []);
 
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, []);
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], [`-${rotateDepth}deg`, `${rotateDepth}deg`]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], [`${rotateDepth}deg`, `-${rotateDepth}deg`]);
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    setMousePos({ x: 0, y: 0 });
+  }, []);
 
-  const translateX = useTransform(mouseXSpring, [-0.5, 0.5], [`-${translateDepth}px`, `${translateDepth}px`]);
-  const translateY = useTransform(mouseYSpring, [-0.5, 0.5], [`${translateDepth}px`, `-${translateDepth}px`]);
-
-  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], [0, 100]);
-  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], [0, 100]);
-
-  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255, 255, 255, 0.9) 10%, rgba(255, 255, 255, 0.75) 20%, rgba(255, 255, 255, 0) 80%)`;
-
-  const handleMouseMove = (e) => {
-    if (!ref.current) return;
-
-    const rect = ref.current.getBoundingClientRect();
-
-    const width = rect.width;
-    const height = rect.height;
-
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-
-    x.set(xPct);
-    y.set(yPct);
+  const cardStyle = {
+    transform: isHovered 
+      ? `perspective(1000px) rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg) translateZ(20px) scale(1.02)`
+      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)',
+    transition: 'transform 0.2s ease-out',
+    willChange: 'transform'
   };
 
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
+  const glareStyle = {
+    background: isHovered 
+      ? `radial-gradient(circle at ${((mousePos.x + 20) / 40) * 100}% ${((mousePos.y + 20) / 40) * 100}%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)`
+      : 'transparent',
+    transition: 'background 0.2s ease-out'
   };
 
   return (
-    <div className={`perspective-[1000px] ${className}`}>
-      <motion.div
-        ref={ref}
+    <div className="w-full">
+      <div
+        className="relative cursor-pointer rounded-2xl overflow-hidden group"
         onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        style={{
-          rotateX,
-          rotateY,
-          translateX,
-          translateY,
-          transformStyle: "preserve-3d",
-          boxShadow:
-            "rgba(0, 0, 0, 0.01) 0px 520px 146px 0px, rgba(0, 0, 0, 0.04) 0px 333px 133px 0px, rgba(0, 0, 0, 0.26) 0px 83px 83px 0px, rgba(0, 0, 0, 0.29) 0px 21px 46px 0px",
-        }}
-        initial={{ scale: 1, z: 0 }}
-        whileHover={{
-          scale: 1.05,
-          z: 50,
-          transition: { duration: 0.2 },
-        }}
-        className="relative rounded-2xl">
-        {children}
-        <motion.div
-          className="pointer-events-none absolute inset-0 z-50 h-full w-full rounded-[16px] opacity-60"
-          style={{
-            background: glareBackground,
-            mixBlendMode: "overlay",
-          }}
-          transition={{ duration: 0.2 }}
-        />
-      </motion.div>
+        style={cardStyle}
+      >
+        {/* Card Background */}
+        <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 h-[200px] flex flex-col justify-center">
+          
+          {/* Gradient Background */}
+          <div 
+            className={`absolute inset-0 bg-gradient-to-br ${skill.gradient} opacity-20 rounded-2xl`} 
+          />
+          
+          {/* Glare Effect */}
+          <div 
+            className="absolute inset-0 rounded-2xl pointer-events-none z-10"
+            style={glareStyle}
+          />
+          
+          {/* Content */}
+          <div className="relative z-20 text-center space-y-4">
+            {/* Icon or Number */}
+            <div className="flex justify-center mb-4">
+              <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${skill.gradient} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                {index + 1}
+              </div>
+            </div>
+            
+            {/* Title */}
+            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-200">
+              {skill.title}
+            </h3>
+            
+            {/* Description */}
+            <p className="text-sm sm:text-base text-gray-300 group-hover:text-gray-100 transition-colors duration-200 leading-relaxed">
+              {skill.description}
+            </p>
+          </div>
+          
+          {/* Hover Border Effect */}
+          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300 pointer-events-none`} />
+        </div>
+        
+        {/* Enhanced Shadow on Hover */}
+        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300 -z-10 scale-110`} />
+      </div>
     </div>
   );
 };
 
 const skills = [
-    {
+  {
     title: "Languages",
-    description: "Python , Java , C++",
+    description: "Python, Java, C++",
     gradient: "from-purple-600 to-indigo-500"
   },
   {
-    title: "Frontend Development",
-    description: "React.js ,TypeScript,JavaScript, Tailwind CSS ,Three.js , Motion",
+    title: "Frontend Development", 
+    description: "React.js, TypeScript, JavaScript, Tailwind CSS, Three.js, Motion",
     gradient: "from-purple-500 to-pink-500"
   },
   {
     title: "UI/UX Design",
-    description: "Figma, Wix Studio , Prototyping , Canva",
+    description: "Figma, Wix Studio, Prototyping, Canva",
     gradient: "from-pink-500 to-fuchsia-500"
   },
   {
     title: "Backend Development",
     description: "Flask, Node.js, MongoDB, Supabase",
-    gradient:"from-violet-500 to-purple-600"
+    gradient: "from-violet-500 to-purple-600"
   },
   {
     title: "Version Control & Tools",
-    description: "Git, Github, Render, Vercel,AWS, Docker,CI/CD, Firebase,Clerk",
+    description: "Git, GitHub, Render, Vercel, AWS, Docker, CI/CD, Firebase, Clerk",
     gradient: "from-indigo-500 to-purple-500"
   },
   {
     title: "ML/DL",
-    description: "LangChain,Scikit-Learn, Numpy , Pandas , Tensorflow , Pytorch ,Core ML/DL Algorithms ",
+    description: "LangChain, Scikit-Learn, NumPy, Pandas, TensorFlow, PyTorch, Core ML/DL Algorithms",
     gradient: "from-fuchsia-500 to-violet-500"
   }
 ];
 
-const SkillCard = ({ skill }) => {
-  return (
-    <CometCard className="w-full">
-      <div
-        className="flex w-80 cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-6 md:p-8"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: "none",
-          opacity: 1,
-          minHeight: "200px",
-        }}>
-        
-        {/* Main Content */}
-        <div className="flex flex-col justify-center flex-1 space-y-4">          
-          {/* Title */}
-          <div className="text-center">
-            <h3 className="text-xl font-semibold text-white mb-2">
-              {skill.title}
-            </h3>
-            <p className="text-lg text-white opacity-75 ">
-              {skill.description}
-            </p>
-          </div>
-          
-          {/* Gradient Background */}
-          <div className={`absolute inset-0 bg-gradient-to-br ${skill.gradient} opacity-20 rounded-[16px]`} />
-        </div>
-      </div>
-    </CometCard>
-  );
-};
-
 // Main Skills Showcase Component
 export default function SkillsShowcase() {
   return (
-    <div className="min-h-screen p-8">
-      <div className="mx-auto max-w-7xl">
-        
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0,y: -20 }}
-          animate={{ opacity: 1,y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
-        >
-          <h1 className="mb-4 py-4 text-5xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-wide">
-            My Skills
-          </h1>
-        </motion.div>
+    <div className="min-h-screen relative overflow-hidden">
+      <div className="relative z-10 p-4 sm:p-6 lg:p-8">
+        <div className="mx-auto max-w-7xl">
+          
+          {/* Header */}
+          <div className="mb-12 sm:mb-16 text-center">
+            <h1 className="mb-4 py-4 text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-wide">
+              My Skills
+            </h1>
+          </div>
 
-        {/* Skills Grid */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="grid gap-8 md:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.id}
-              initial={{ opacity: 0,y: 20 }}
-              animate={{ opacity: 1,y: 0 }}
-              transition={{ 
-                duration: 0.6, 
-                delay: 0.1 * index,
-                ease: "easeOut"
-              }}
-            >
-              <SkillCard skill={skill} />
-            </motion.div>
-          ))}
-        </motion.div>
-
+          {/* Skills Grid */}
+          <div className="grid gap-6 sm:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+            {skills.map((skill, index) => (
+              <div
+                key={index}
+                className="opacity-0 animate-fadeInUp"
+                style={{
+                  animationDelay: `${index * 150}ms`,
+                  animationFillMode: 'both'
+                }}
+              >
+                <SkillCard skill={skill} index={index} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+      
+      <style jsx>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fadeInUp {
+          animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+          * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

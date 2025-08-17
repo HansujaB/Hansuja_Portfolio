@@ -116,7 +116,7 @@ export function TypewriterEffectDemo() {
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
+        {/* {[...Array(20)].map((_, i) => (
           <div
             key={i}
             className="absolute animate-pulse"
@@ -129,10 +129,10 @@ export function TypewriterEffectDemo() {
           >
             <div className="w-1 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-60"></div>
           </div>
-        ))}
+        ))} */}
         
         {/* Larger floating emoji */}
-        <div 
+        {/* <div 
           className="absolute text-6xl opacity-20 animate-bounce transition-all duration-1000"
           style={{
             right: "10%",
@@ -141,7 +141,7 @@ export function TypewriterEffectDemo() {
           }}
         >
           {floatingEmojis[currentEmoji]}
-        </div>
+        </div> */}
       </div>
 
       {/* Main Content */}
