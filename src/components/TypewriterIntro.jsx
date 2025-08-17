@@ -9,12 +9,11 @@ export function TypewriterEffectDemo() {
     { text: "I" },
     { text: "am" },
     {
-      text: "Hansuja",
-      className: "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]"
+      text: "Hansuja"
     },
     {
       text: "Budhiraja",
-      className: "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]"
+      // className: "text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-600 drop-shadow-[0_0_20px_rgba(236,72,153,0.5)]"
     }
   ];
 
@@ -62,7 +61,7 @@ export function TypewriterEffectDemo() {
             </div>
           </a>
         </div>
-        
+
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
             <a 
               href="#projects"

@@ -211,7 +211,7 @@ export default function CyberpunkBackground() {
         }}
       /> */}
 
-      <motion.div
+      {/* <motion.div
         className="absolute top-1/3 left-16 w-36 h-36 rounded-full blur-lg"
         style={{
           background: 'radial-gradient(circle, rgba(168, 85, 247, 0.45) 0%, transparent 70%)'
@@ -418,7 +418,7 @@ export default function CyberpunkBackground() {
           x: { duration: 0.75, ease: "easeOut" }, // Increased from 0.5
           y: { duration: 0.75, ease: "easeOut" }
         }}
-      />
+      /> */}
 
       {/* Floating Particles - NO ROTATION */}
       <div className="absolute inset-0 pointer-events-none">
