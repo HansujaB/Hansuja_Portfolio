@@ -1,202 +1,369 @@
-import { ThreeDCardDemo } from "./ProjectCard";
-import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ExternalLink, Github, Globe } from "lucide-react";
+
+const FILTER_TAGS = ["All", "AI/ML", "JS/TS", "Python", "npm packages", "Rust"];
 
 const projects = [
   {
     id: 1,
     title: "FinBuddy",
-    description: "FinBuddy is a modern FinTech web application developed during a Google Developer Student Clubs (GDSC) Hackathon.",
+    description:
+      "A modern FinTech web application built during the GDSC Hackathon — tracks budgets, expenses, and financial goals with beautiful visualisations and real-time insights.",
     image: "FinBuddy.png",
     demoLink: "https://gdsc-hackk.vercel.app/",
     githubLink: "https://github.com/HansujaB/FinTech-gdsc-Hackathon",
-    technologies: ["React.js","Node.js", "Tailwind CSS", "MongoDB","Chart.js"]
+    tags: ["JS/TS"],
+    technologies: ["React.js", "Node.js", "Tailwind CSS", "MongoDB", "Chart.js"],
   },
   {
     id: 2,
     title: "Hirrd",
-    description: "A full-stack job portal for recruiters and candidates, tracks applications and job postings in real time.",
+    description:
+      "Full-stack job portal for recruiters and candidates with real-time application tracking, role-based access, and a sleek recruiter dashboard.",
     image: "Hirrd.png",
-    demoLink: "hirrd-pi-blond.vercel.app",
+    demoLink: "https://hirrd-pi-blond.vercel.app",
     githubLink: "https://github.com/HansujaB/Project_Hirrd",
-    technologies: ["React.js", "Tailwind CSS", "Supabase", "Clerk"]
+    tags: ["JS/TS"],
+    technologies: ["React.js", "Tailwind CSS", "Supabase", "Clerk"],
   },
   {
     id: 3,
     title: "SMS Spam Classifier",
-    description: "SMS Spam Classifier leverages machine learning and NLP to analyze and predict whether a given SMS message is spam.",
+    description:
+      "NLP-powered spam classifier using Multinomial Naive Bayes and TF-IDF vectorisation, deployed on Render with a clean Streamlit UI.",
     image: "SpamClassifier.png",
     demoLink: "https://sms-spam-classifier-n3ea.onrender.com",
     githubLink: "https://github.com/HansujaB/SMS_spam_classifier",
-    technologies: ["Streamlit", "Python", "NLP", "Multinomial Naive Bayes", "Render"]
+    tags: ["AI/ML", "Python"],
+    technologies: ["Streamlit", "Python", "NLP", "Naive Bayes", "Render"],
   },
   {
     id: 4,
-    title: "TinyStories SLM Model",
-    description: "This project implements a small language model (SLM) inspired by GPT-2, trained from scratch on the TinyStories dataset to generate stories for 3-4 yr olds.",
+    title: "TinyStories SLM",
+    description:
+      "A small language model inspired by GPT-2, trained from scratch on the TinyStories dataset to generate coherent short stories for 3–4 year-olds using transformers and PyTorch.",
     image: "SLM.png",
     demoLink: "",
     githubLink: "https://github.com/HansujaB/Small-Language-Model-Tiny-Stories",
-    technologies: ["Transformers", "PyTorch", "SLM"]
+    tags: ["AI/ML", "Python"],
+    technologies: ["Transformers", "PyTorch", "SLM"],
   },
   {
     id: 5,
     title: "WhatsApp Chat Analyzer",
-    description: "A powerful tool that extracts and visualizes insights from exported WhatsApp chat data. This project analyzes message trends, identifies the most active users, generates word clouds, performs emoji analysis, and maps user activity across time.",
+    description:
+      "Extracts and visualises rich insights from exported WhatsApp chats — message trends, most active users, word clouds, emoji analysis, and activity heatmaps.",
     image: "WCA.png",
     demoLink: "https://whatsapp-chat-analyser-2nbu.onrender.com",
     githubLink: "https://github.com/HansujaB/Whatsapp-Chat-Analyser",
-    technologies: ["Python", "Streamlit","NLP","Matplotlib", "Render"]
-  }
+    tags: ["AI/ML", "Python"],
+    technologies: ["Python", "Streamlit", "NLP", "Matplotlib", "Render"],
+  },
 ];
 
-export default function ProjectsCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [cardsPerView, setCardsPerView] = useState(2);
-
-  // Set cards per view based on screen size
+function useReveal() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setCardsPerView(1); // Mobile: 1 card
-      } else {
-        setCardsPerView(2); // Laptop and above: 2 cards
-      }
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
+  return [ref, visible];
+}
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying) return;
+function ProjectCard({ project, featured = false }) {
+  const [hovered, setHovered] = useState(false);
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const maxIndex = projects.length - cardsPerView;
-        return prev >= maxIndex ? 0 : prev + 1;
-      });
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, cardsPerView]);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
-    setIsAutoPlaying(false);
-  };
-
-  const goToNext = () => {
-    const maxIndex = projects.length - cardsPerView;
-    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
-    setIsAutoPlaying(false);
-  };
-
-  const goToSlide = (index) => {
-    const maxIndex = projects.length - cardsPerView;
-    setCurrentIndex(Math.min(index, maxIndex));
-    setIsAutoPlaying(false);
-  };
-
-  const maxDots = projects.length - cardsPerView + 1;
+  if (featured) {
+    return (
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 0,
+          background: "#1c1c1c",
+          border: `1px solid ${hovered ? "#333" : "#252525"}`,
+          borderRadius: 20,
+          overflow: "hidden",
+          transition: "all 0.3s ease",
+          boxShadow: hovered ? "0 30px 80px rgba(0,0,0,0.5)" : "none",
+          marginBottom: 24,
+        }}
+        className="featured-card"
+      >
+        {/* Image */}
+        <div style={{ position: "relative", overflow: "hidden", minHeight: 340 }}>
+          <img
+            src={`/${project.image}`}
+            alt={project.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: hovered ? "scale(1.04)" : "scale(1)",
+              transition: "transform 0.5s ease",
+              display: "block",
+            }}
+            onError={(e) => {
+              e.target.style.display = "none";
+              e.target.parentElement.style.background = "linear-gradient(135deg, #1a1a1a, #111)";
+            }}
+          />
+          {/* Featured badge */}
+          <div
+            style={{
+              position: "absolute",
+              top: 16,
+              left: 16,
+              padding: "4px 12px",
+              background: "#6366f1",
+              borderRadius: 99,
+              fontSize: 11,
+              fontWeight: 700,
+              color: "white",
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
+            Featured
+          </div>
+        </div>
+        {/* Content */}
+        <div style={{ padding: "40px 36px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+            {project.tags.map((t) => (
+              <span
+                key={t}
+                style={{
+                  padding: "3px 10px", background: "rgba(99,102,241,0.15)",
+                  border: "1px solid rgba(99,102,241,0.3)", borderRadius: 99,
+                  fontSize: 11, color: "#818cf8", fontFamily: "'JetBrains Mono', monospace",
+                }}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+          <h3
+            style={{
+              fontSize: "clamp(1.4rem, 3vw, 2rem)",
+              fontWeight: 800,
+              color: "#f4f4f5",
+              marginBottom: 16,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {project.title}
+          </h3>
+          <p style={{ fontSize: 15, color: "#a1a1aa", lineHeight: 1.7, marginBottom: 28 }}>
+            {project.description}
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 32 }}>
+            {project.technologies.map((t) => (
+              <span key={t} className="tag">{t}</span>
+            ))}
+          </div>
+          <div style={{ display: "flex", gap: 12 }}>
+            <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: 13, padding: "8px 18px" }}>
+              <Github size={14} /> GitHub
+            </a>
+            {project.demoLink && (
+              <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="btn-accent" style={{ fontSize: 13, padding: "8px 18px" }}>
+                <Globe size={14} /> Live Demo
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen py-8 sm:py-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        
-        {/* Header */}
-        <div className="mb-2 sm:mb-2 text-center">
-            <h1 className="mb-4 py-4 text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-wide">
-              My Projects
-            </h1>
-          </div>
-
-        {/* Carousel Container */}
-        <div className="relative">
-          
-          {/* Navigation Buttons - Hide on mobile if only 1 card visible */}
-          {cardsPerView > 1 || currentIndex > 0 ? (
-            <button
-              onClick={goToPrevious}
-              disabled={currentIndex === 0}
-              className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 backdrop-blur-sm rounded-full p-2 sm:p-3 transition-all duration-200 group ${
-                currentIndex === 0 
-                  ? 'bg-white/5 cursor-not-allowed' 
-                  : 'bg-white/10 hover:bg-white/20'
-              }`}>
-              <ChevronLeft className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform ${
-                currentIndex === 0 
-                  ? 'text-white/50' 
-                  : 'text-white group-hover:scale-110'
-              }`} />
-            </button>
-          ) : null}
-          
-          {cardsPerView > 1 || currentIndex < projects.length - cardsPerView ? (
-            <button
-              onClick={goToNext}
-              disabled={currentIndex >= projects.length - cardsPerView}
-              className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 backdrop-blur-sm rounded-full p-2 sm:p-3 transition-all duration-200 group ${
-                currentIndex >= projects.length - cardsPerView
-                  ? 'bg-white/5 cursor-not-allowed'
-                  : 'bg-white/10 hover:bg-white/20'
-              }`}>
-              <ChevronRight className={`w-5 h-5 sm:w-6 sm:h-6 transition-transform ${
-                currentIndex >= projects.length - cardsPerView
-                  ? 'text-white/50'
-                  : 'text-white group-hover:scale-110'
-              }`} />
-            </button>
-          ) : null}
-
-          {/* Cards Container */}
-          <div className="overflow-hidden px-8 sm:px-12 lg:px-16">
-            <div
-              className="flex transition-transform duration-500 ease-in-out gap-4 sm:gap-6"
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: "#1c1c1c",
+        border: `1px solid ${hovered ? "#333" : "#252525"}`,
+        borderRadius: 16,
+        overflow: "hidden",
+        transition: "all 0.3s ease",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: hovered ? "0 24px 60px rgba(0,0,0,0.4)" : "none",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Image */}
+      <div style={{ position: "relative", height: 200, overflow: "hidden" }}>
+        <img
+          src={`/${project.image}`}
+          alt={project.title}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transform: hovered ? "scale(1.05)" : "scale(1)",
+            transition: "transform 0.5s ease",
+          }}
+          onError={(e) => {
+            e.target.style.display = "none";
+            e.target.parentElement.style.background = "linear-gradient(135deg, #1a1a1a, #111)";
+          }}
+        />
+      </div>
+      {/* Content */}
+      <div style={{ padding: "24px", display: "flex", flexDirection: "column", flex: 1 }}>
+        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+          {project.tags.map((t) => (
+            <span
+              key={t}
               style={{
-                transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)`,
-              }}>
-              {projects.map((project) => (
-                <div 
-                  key={project.id} 
-                  className={`flex-shrink-0 flex justify-center ${
-                    cardsPerView === 1 ? 'w-full' : 'w-1/2'
-                  }`}>
-                  <ThreeDCardDemo project={project} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dots Navigation */}
-          {maxDots > 1 && (
-            <div className="flex justify-center mt-6 sm:mt-8 space-x-2">
-              {Array.from({ length: maxDots }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-200 ${
-                    index === currentIndex
-                      ? "bg-white scale-125"
-                      : "bg-white/40 hover:bg-white/60"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
-
-          {/* Project Counter */}
-          <div className="text-center mt-4">
-            <span className="text-gray-400 text-xs sm:text-sm">
-              Showing {currentIndex + 1}-{Math.min(currentIndex + cardsPerView, projects.length)} of {projects.length}
+                padding: "2px 8px", background: "rgba(99,102,241,0.1)",
+                border: "1px solid rgba(99,102,241,0.25)", borderRadius: 99,
+                fontSize: 10, color: "#818cf8", fontFamily: "'JetBrains Mono', monospace",
+              }}
+            >
+              {t}
             </span>
-          </div>
+          ))}
+        </div>
+        <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "#f4f4f5", marginBottom: 10, letterSpacing: "-0.01em" }}>
+          {project.title}
+        </h3>
+        <p style={{ fontSize: 13.5, color: "#71717a", lineHeight: 1.65, marginBottom: 16, flex: 1 }}>
+          {project.description}
+        </p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20 }}>
+          {project.technologies.map((t) => (
+            <span key={t} className="tag">{t}</span>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: 10, marginTop: "auto" }}>
+          <a href={project.githubLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: 12, padding: "7px 14px", flex: 1, justifyContent: "center" }}>
+            <Github size={13} /> GitHub
+          </a>
+          {project.demoLink ? (
+            <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="btn-accent" style={{ fontSize: 12, padding: "7px 14px", flex: 1, justifyContent: "center" }}>
+              <Globe size={13} /> Demo
+            </a>
+          ) : (
+            <span style={{ flex: 1 }} />
+          )}
         </div>
       </div>
     </div>
   );
 }
 
+export default function Projects() {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [headerRef, headerVisible] = useReveal();
+
+  const filtered =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((p) => p.tags.includes(activeFilter));
+
+  const featured = filtered[0];
+  const rest     = filtered.slice(1);
+
+  return (
+    <section id="projects" style={{ padding: "100px 24px", maxWidth: 1200, margin: "0 auto" }}>
+      {/* Header */}
+      <div
+        ref={headerRef}
+        style={{
+          marginBottom: 56,
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? "translateY(0)" : "translateY(24px)",
+          transition: "all 0.6s ease",
+        }}
+      >
+        <span className="section-label">// projects</span>
+        <h2 className="section-title">Things I've Built</h2>
+        <div className="section-divider" />
+        <p className="section-subtitle">
+          A collection of projects across AI/ML, web development, and more.
+        </p>
+      </div>
+
+      {/* Filter tabs */}
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 48 }}>
+        {FILTER_TAGS.map((tag) => (
+          <button
+            key={tag}
+            onClick={() => setActiveFilter(tag)}
+            style={{
+              padding: "8px 20px",
+              borderRadius: 99,
+              border: `1px solid ${activeFilter === tag ? "#6366f1" : "#252525"}`,
+              background: activeFilter === tag ? "rgba(99,102,241,0.18)" : "transparent",
+              color: activeFilter === tag ? "#818cf8" : "#71717a",
+              fontSize: 13,
+              fontWeight: 500,
+              cursor: "pointer",
+              transition: "all 0.2s",
+              fontFamily: "'Inter', sans-serif",
+            }}
+            onMouseEnter={(e) => {
+              if (activeFilter !== tag) {
+                e.currentTarget.style.borderColor = "#333";
+                e.currentTarget.style.color = "#a1a1aa";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeFilter !== tag) {
+                e.currentTarget.style.borderColor = "#252525";
+                e.currentTarget.style.color = "#71717a";
+              }
+            }}
+          >
+            {tag}
+          </button>
+        ))}
+      </div>
+
+      {/* Projects */}
+      {filtered.length === 0 ? (
+        <div style={{ textAlign: "center", color: "#71717a", padding: "60px 0" }}>
+          No projects found for this filter yet.
+        </div>
+      ) : (
+        <>
+          {/* Featured */}
+          {featured && <ProjectCard project={featured} featured />}
+
+          {/* Horizontal grid (2 per row) */}
+          {rest.length > 0 && (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 380px), 1fr))",
+                gap: 24,
+              }}
+            >
+              {rest.map((p) => (
+                <ProjectCard key={p.id} project={p} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .featured-card { grid-template-columns: 1fr !important; }
+          .featured-card > div:first-child { min-height: 220px !important; }
+        }
+      `}</style>
+    </section>
+  );
+}

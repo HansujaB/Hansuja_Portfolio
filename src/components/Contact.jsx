@@ -1,287 +1,380 @@
-import React, { useState } from "react";
-import { Github, Linkedin, Mail, Heart, Star, Sparkles, Send } from "lucide-react";
+import { useRef, useEffect, useState } from "react";
+import { Github, Linkedin, Mail, Send, CheckCircle2, AlertCircle } from "lucide-react";
 
-export default function ContactSection() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [errors, setErrors] = useState({});
-  const [hoveredIcon, setHoveredIcon] = useState(null);
+function useReveal() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return [ref, visible];
+}
 
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
-    }
-    
-    return newErrors;
+const socials = [
+  {
+    icon: <Github size={20} />,
+    label: "GitHub",
+    handle: "@HansujaB",
+    href: "https://github.com/HansujaB",
+    color: "#f4f4f5",
+  },
+  {
+    icon: <Linkedin size={20} />,
+    label: "LinkedIn",
+    handle: "Hansuja Budhiraja",
+    href: "https://www.linkedin.com/in/hansuja-budhiraja-976a382a0/",
+    color: "#60a5fa",
+  },
+  {
+    icon: <Mail size={20} />,
+    label: "Email",
+    handle: "hansujaigdtuwcseai@gmail.com",
+    href: "mailto:hansujaigdtuwcseai@gmail.com",
+    color: "#a78bfa",
+  },
+];
+
+export default function Contact() {
+  const [headerRef, headerVisible] = useReveal();
+  const [formRef, formVisible]     = useReveal();
+
+  const [formData, setFormData]   = useState({ name: "", email: "", message: "" });
+  const [errors, setErrors]       = useState({});
+  const [status, setStatus]       = useState("idle"); // idle | submitting | success | error
+  const [hoveredSocial, setHoveredSocial] = useState(null);
+
+  const validate = () => {
+    const e = {};
+    if (!formData.name.trim())    e.name    = "Name is required";
+    if (!formData.email.trim())   e.email   = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) e.email = "Invalid email";
+    if (!formData.message.trim()) e.message = "Message is required";
+    return e;
   };
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
+    setFormData((p) => ({ ...p, [name]: value }));
+    if (errors[name]) setErrors((p) => ({ ...p, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
-      return;
-    }
-
-    setIsSubmitting(true);
-    
+    const errs = validate();
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    setStatus("submitting");
     try {
-      // Simulate API call to Formspree
-      const response = await fetch('https://formspree.io/f/movlbpow', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      const res = await fetch("https://formspree.io/f/movlbpow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-      
-      if (response.ok) {
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        throw new Error('Failed to send message');
-      }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      // For demo purposes, simulate success after 2 seconds
-      setTimeout(() => {
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
-      }, 2000);
-    } finally {
-      setIsSubmitting(false);
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", message: "" });
+      } else throw new Error("failed");
+    } catch {
+      setStatus("error");
     }
   };
 
+  const inputStyle = (field) => ({
+    width: "100%",
+    padding: "12px 16px",
+    background: "#111",
+    border: `1px solid ${errors[field] ? "#ef4444" : "#252525"}`,
+    borderRadius: 10,
+    color: "#f4f4f5",
+    fontSize: 14,
+    fontFamily: "'Inter', sans-serif",
+    outline: "none",
+    transition: "border-color 0.2s",
+  });
+
   return (
-    <section className="py-16 px-6 relative overflow-hidden">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
-        {/* Contact Info - Left Side */}
-        <div className="flex flex-col justify-center space-y-8 bg-gradient-to-br from-pink-50/10 via-purple-50/10 to-indigo-50/10 backdrop-blur-sm p-8 rounded-3xl shadow-xl border border-pink-200/20">
-          <div className="text-center mb-6">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-2">
-              Let's Connect!
-            </h2>
-            <p className="text-pink-200 text-sm">I'd love to hear from you!</p>
+    <section id="contact" style={{ padding: "100px 24px", maxWidth: 1200, margin: "0 auto" }}>
+      {/* Header */}
+      <div
+        ref={headerRef}
+        style={{
+          marginBottom: 64,
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? "translateY(0)" : "translateY(24px)",
+          transition: "all 0.6s ease",
+        }}
+      >
+        <span className="section-label">// contact</span>
+        <h2 className="section-title">Let's Talk</h2>
+        <div className="section-divider" />
+        <p className="section-subtitle">
+          Got an idea, collab, or just want to say hi? I'm always up for a good conversation.
+        </p>
+      </div>
+
+      <div
+        ref={formRef}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 48,
+          alignItems: "start",
+          opacity: formVisible ? 1 : 0,
+          transform: formVisible ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.7s ease",
+        }}
+        className="contact-grid"
+      >
+        {/* Left — info + socials */}
+        <div>
+          <h3
+            style={{
+              fontSize: "clamp(1.5rem, 3vw, 2rem)",
+              fontWeight: 800,
+              color: "#f4f4f5",
+              letterSpacing: "-0.02em",
+              marginBottom: 16,
+              lineHeight: 1.2,
+            }}
+          >
+            I'm always open to{" "}
+            <span style={{ color: "#6366f1" }}>new opportunities</span>
+          </h3>
+          <p style={{ fontSize: 15, color: "#71717a", lineHeight: 1.7, marginBottom: 40 }}>
+            Whether it's a project collaboration, a cool hackathon, a research discussion,
+            or anything exciting in tech — drop me a message!
+          </p>
+
+          {/* Socials */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target={s.href.startsWith("mailto") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                onMouseEnter={() => setHoveredSocial(s.label)}
+                onMouseLeave={() => setHoveredSocial(null)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 14,
+                  padding: "16px 20px",
+                  background: hoveredSocial === s.label ? "#1a1a1a" : "#1c1c1c",
+                  border: `1px solid ${hoveredSocial === s.label ? "#333" : "#252525"}`,
+                  borderRadius: 14,
+                  textDecoration: "none",
+                  transition: "all 0.25s ease",
+                  transform: hoveredSocial === s.label ? "translateX(4px)" : "translateX(0)",
+                }}
+              >
+                <div
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 10,
+                    background: `${s.color}18`,
+                    border: `1px solid ${s.color}30`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: s.color,
+                    flexShrink: 0,
+                  }}
+                >
+                  {s.icon}
+                </div>
+                <div>
+                  <p style={{ fontSize: 12, color: "#71717a", marginBottom: 2 }}>{s.label}</p>
+                  <p style={{ fontSize: 14, fontWeight: 500, color: hoveredSocial === s.label ? "#f4f4f5" : "#a1a1aa" }}>
+                    {s.handle}
+                  </p>
+                </div>
+              </a>
+            ))}
           </div>
 
-          <div className="space-y-6">
-            {/* GitHub */}
-            <div 
-              className="group flex items-center space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-500/20 to-indigo-500/20 hover:from-purple-500/30 hover:to-indigo-500/30 transition-all duration-300 cursor-pointer"
-              onMouseEnter={() => setHoveredIcon('github')}
-              onMouseLeave={() => setHoveredIcon(null)}
-            >
-              <div className="relative">
-                <Github className="text-white group-hover:text-purple-300 transition-colors duration-300" size={24} />
-                {hoveredIcon === 'github' && (
-                  <div className="absolute -top-1 -right-1">
-                    <Sparkles className="w-3 h-3 text-yellow-400 animate-spin" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="text-white/90 text-sm font-medium">Check out my repos</p>
-                <a
-                  href="https://github.com/HansujaB"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-300 hover:text-pink-400 transition-colors text-sm"
-                >
-                  github.com/HansujaB
-                </a>
-              </div>
-            </div>
-
-            {/* LinkedIn */}
-            <div 
-              className="group flex items-center space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 transition-all duration-300 cursor-pointer"
-              onMouseEnter={() => setHoveredIcon('linkedin')}
-              onMouseLeave={() => setHoveredIcon(null)}
-            >
-              <div className="relative">
-                <Linkedin className="text-white group-hover:text-blue-300 transition-colors duration-300" size={24} />
-                {hoveredIcon === 'linkedin' && (
-                  <div className="absolute -top-1 -right-1">
-                    <Star className="w-3 h-3 text-yellow-400 animate-pulse" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="text-white/90 text-sm font-medium">Let's be professional friends</p>
-                <a
-                  href="https://www.linkedin.com/in/hansuja-budhiraja-976a382a0/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-300 hover:text-cyan-400 transition-colors text-sm"
-                >
-                  Connect with me!
-                </a>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div 
-              className="group flex items-center space-x-4 p-4 rounded-2xl bg-gradient-to-r from-pink-500/20 to-rose-500/20 hover:from-pink-500/30 hover:to-rose-500/30 transition-all duration-300 cursor-pointer"
-              onMouseEnter={() => setHoveredIcon('email')}
-              onMouseLeave={() => setHoveredIcon(null)}
-            >
-              <div className="relative">
-                <Mail className="text-white group-hover:text-pink-300 transition-colors duration-300" size={24} />
-                {hoveredIcon === 'email' && (
-                  <div className="absolute -top-1 -right-1">
-                    <Heart className="w-3 h-3 text-red-400 animate-pulse" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <p className="text-white/90 text-sm font-medium">Drop me a email</p>
-                <a
-                  href="mailto:hansujaigdtuwcseai@gmail.com"
-                  className="text-pink-300 hover:text-rose-400 transition-colors text-sm"
-                >
-                  hansujaigdtuwcseai@gmail.com 
-                </a>
-              </div>
-            </div>
+          {/* Available badge */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              marginTop: 28,
+              padding: "8px 16px",
+              background: "rgba(34,197,94,0.08)",
+              border: "1px solid rgba(34,197,94,0.2)",
+              borderRadius: 99,
+            }}
+          >
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#22c55e",
+                animation: "ping 1.5s ease-in-out infinite",
+              }}
+            />
+            <span style={{ fontSize: 13, color: "#22c55e", fontWeight: 500 }}>
+              Open to opportunities
+            </span>
           </div>
         </div>
 
-        {/* Contact Form - Right Side */}
-        <div className="bg-gradient-to-br from-purple-50/10 via-pink-50/10 to-rose-50/10 backdrop-blur-sm shadow-xl border border-purple-200/20 p-8 rounded-3xl">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent mb-2">
-              Contact Me!
-            </h2>
-            <p className="text-purple-200 text-sm">I promise to reply with lots of enthusiasm!</p>
-          </div>
-
-          {isSubmitted ? (
-            <div className="text-center py-12">
-              <h3 className="text-2xl font-bold text-green-400 mb-2">Message sent!</h3>
-              <p className="text-green-300">Thanks for reaching out! 💖</p>
-              <button 
-                onClick={() => setIsSubmitted(false)}
-                className="mt-4 px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+        {/* Right — form */}
+        <div
+          style={{
+            background: "#1c1c1c",
+            border: "1px solid #252525",
+            borderRadius: 20,
+            padding: "36px 32px",
+          }}
+        >
+          {status === "success" ? (
+            <div style={{ textAlign: "center", padding: "40px 0" }}>
+              <CheckCircle2 size={48} style={{ color: "#22c55e", margin: "0 auto 16px" }} />
+              <h3 style={{ fontSize: "1.3rem", fontWeight: 700, color: "#f4f4f5", marginBottom: 8 }}>
+                Message sent!
+              </h3>
+              <p style={{ color: "#71717a", marginBottom: 24 }}>I'll get back to you soon 🙌</p>
+              <button
+                onClick={() => setStatus("idle")}
+                className="btn-outline"
+                style={{ fontSize: 13, margin: "0 auto" }}
               >
-                Send another message
+                Send another
               </button>
             </div>
           ) : (
-            <div className="space-y-6">
-              {/* Name Field */}
-              <div className="group">
-                <label htmlFor="name" className="text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
-                  Your full name?
+            <form onSubmit={handleSubmit} noValidate>
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 500, color: "#a1a1aa", marginBottom: 8 }}>
+                  Your name
                 </label>
                 <input
-                  id="name"
+                  id="contact-name"
                   type="text"
                   name="name"
                   value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Full name..."
-                  className="w-full p-4 rounded-2xl bg-white/20 backdrop-blur-sm text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-pink-400/50 focus:border-pink-400 transition-all duration-300"
+                  onChange={handleChange}
+                  placeholder="Jane Doe"
+                  style={inputStyle("name")}
+                  onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
+                  onBlur={(e) => (e.target.style.borderColor = errors.name ? "#ef4444" : "#252525")}
                 />
-                {errors.name && (
-                  <p className="text-red-400 text-sm mt-1">{errors.name}</p>
-                )}
+                {errors.name && <p style={{ fontSize: 12, color: "#ef4444", marginTop: 6 }}>{errors.name}</p>}
               </div>
 
-              {/* Email Field */}
-              <div className="group">
-                <label htmlFor="email" className=" text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
-                  Your email address
+              <div style={{ marginBottom: 20 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 500, color: "#a1a1aa", marginBottom: 8 }}>
+                  Email address
                 </label>
                 <input
-                  id="email"
+                  id="contact-email"
                   type="email"
                   name="email"
                   value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="yourname@example.com"
-                  className="w-full p-4 rounded-2xl bg-white/20 backdrop-blur-sm text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-purple-400/50 focus:border-purple-400 transition-all duration-300"
+                  onChange={handleChange}
+                  placeholder="jane@example.com"
+                  style={inputStyle("email")}
+                  onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
+                  onBlur={(e) => (e.target.style.borderColor = errors.email ? "#ef4444" : "#252525")}
                 />
-                {errors.email && (
-                  <p className="text-red-400 text-sm mt-1">{errors.email}</p>
-                )}
+                {errors.email && <p style={{ fontSize: 12, color: "#ef4444", marginTop: 6 }}>{errors.email}</p>}
               </div>
 
-              {/* Message Field */}
-              <div className="group">
-                <label htmlFor="message" className=" text-white/90 text-sm font-medium mb-2 flex items-center gap-2">
-                  Your message
+              <div style={{ marginBottom: 28 }}>
+                <label style={{ display: "block", fontSize: 13, fontWeight: 500, color: "#a1a1aa", marginBottom: 8 }}>
+                  Message
                 </label>
                 <textarea
-                  id="message"
+                  id="contact-message"
                   name="message"
-                  rows="5"
+                  rows={5}
                   value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Suggestions/Feedbacks are always welcome.."
-                  className="w-full p-4 rounded-2xl bg-white/20 backdrop-blur-sm text-white placeholder-white/50 border border-white/20 focus:outline-none focus:ring-2 focus:ring-rose-400/50 focus:border-rose-400 transition-all duration-300 resize-none"
+                  onChange={handleChange}
+                  placeholder="Hey! I'd love to collaborate on..."
+                  style={{ ...inputStyle("message"), resize: "none", lineHeight: 1.6 }}
+                  onFocus={(e) => (e.target.style.borderColor = "#6366f1")}
+                  onBlur={(e) => (e.target.style.borderColor = errors.message ? "#ef4444" : "#252525")}
                 />
-                {errors.message && (
-                  <p className="text-red-400 text-sm mt-1">{errors.message}</p>
-                )}
+                {errors.message && <p style={{ fontSize: 12, color: "#ef4444", marginTop: 6 }}>{errors.message}</p>}
               </div>
 
-              {/* Submit Button */}
+              {status === "error" && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    padding: "10px 14px",
+                    background: "rgba(239,68,68,0.1)",
+                    border: "1px solid rgba(239,68,68,0.2)",
+                    borderRadius: 10,
+                    marginBottom: 16,
+                  }}
+                >
+                  <AlertCircle size={14} style={{ color: "#ef4444" }} />
+                  <span style={{ fontSize: 13, color: "#fca5a5" }}>Something went wrong. Please try again.</span>
+                </div>
+              )}
+
               <button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="group w-full bg-gradient-to-r from-indigo-900 via-purple-800 to-indigo-900 p-4 rounded-2xl text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                type="submit"
+                disabled={status === "submitting"}
+                className="btn-accent"
+                style={{ width: "100%", justifyContent: "center", padding: "14px", fontSize: 14, opacity: status === "submitting" ? 0.7 : 1 }}
               >
-                {isSubmitting ? (
+                {status === "submitting" ? (
                   <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    Sending your message...
+                    <div style={{ width: 16, height: 16, border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "white", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+                    Sending...
                   </>
                 ) : (
-                  <>
-                    <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    Send your message
-                  </>
+                  <><Send size={15} /> Send Message</>
                 )}
               </button>
-            </div>
+            </form>
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <div
+        style={{
+          marginTop: 80,
+          paddingTop: 32,
+          borderTop: "1px solid #1a1a1a",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 12,
+        }}
+      >
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: "#71717a" }}>
+          HB<span style={{ color: "#6366f1" }}>.</span>
+        </span>
+        <p style={{ fontSize: 13, color: "#71717a" }}>
+          Built with React + Vite · {new Date().getFullYear()}
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes ping {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.6; transform: scale(1.3); }
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) {
+          .contact-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

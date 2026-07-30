@@ -1,184 +1,167 @@
-import React, { useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 
-// Optimized SkillCard with lighter animations
-const SkillCard = ({ skill, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = useCallback((e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20;
-    setMousePos({ x, y });
+function useReveal() {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
-
-  const handleMouseEnter = useCallback(() => {
-    setIsHovered(true);
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    setIsHovered(false);
-    setMousePos({ x: 0, y: 0 });
-  }, []);
-
-  const cardStyle = {
-    transform: isHovered 
-      ? `perspective(1000px) rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg) translateZ(20px) scale(1.02)`
-      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale(1)',
-    transition: 'transform 0.2s ease-out',
-    willChange: 'transform'
-  };
-
-  const glareStyle = {
-    background: isHovered 
-      ? `radial-gradient(circle at ${((mousePos.x + 20) / 40) * 100}% ${((mousePos.y + 20) / 40) * 100}%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)`
-      : 'transparent',
-    transition: 'background 0.2s ease-out'
-  };
-
-  return (
-    <div className="w-full">
-      <div
-        className="relative cursor-pointer rounded-2xl overflow-hidden group"
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        style={cardStyle}
-      >
-        {/* Card Background */}
-        <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 h-[200px] flex flex-col justify-center">
-          
-          {/* Gradient Background */}
-          <div 
-            className={`absolute inset-0 bg-gradient-to-br ${skill.gradient} opacity-20 rounded-2xl`} 
-          />
-          
-          {/* Glare Effect */}
-          <div 
-            className="absolute inset-0 rounded-2xl pointer-events-none z-10"
-            style={glareStyle}
-          />
-          
-          {/* Content */}
-          <div className="relative z-20 text-center space-y-4">
-            {/* Icon or Number */}
-            <div className="flex justify-center mb-4">
-              <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${skill.gradient} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                {index + 1}
-              </div>
-            </div>
-            
-            {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-white transition-colors duration-200">
-              {skill.title}
-            </h3>
-            
-            {/* Description */}
-            <p className="text-sm sm:text-base text-gray-300 group-hover:text-gray-100 transition-colors duration-200 leading-relaxed">
-              {skill.description}
-            </p>
-          </div>
-          
-          {/* Hover Border Effect */}
-          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300 pointer-events-none`} />
-        </div>
-        
-        {/* Enhanced Shadow on Hover */}
-        <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${skill.gradient} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300 -z-10 scale-110`} />
-      </div>
-    </div>
-  );
-};
+  return [ref, visible];
+}
 
 const skills = [
-  {
-    title: "Languages",
-    description: "Python, Java, C++",
-    gradient: "from-purple-600 to-indigo-500"
-  },
-  {
-    title: "Frontend Development", 
-    description: "React.js, TypeScript, JavaScript, Tailwind CSS, Three.js, Motion",
-    gradient: "from-purple-500 to-pink-500"
-  },
-  {
-    title: "UI/UX Design",
-    description: "Figma, Wix Studio, Prototyping, Canva",
-    gradient: "from-pink-500 to-fuchsia-500"
-  },
-  {
-    title: "Backend Development",
-    description: "Flask, Node.js, MongoDB, Supabase",
-    gradient: "from-violet-500 to-purple-600"
-  },
-  {
-    title: "Version Control & Tools",
-    description: "Git, GitHub, Render, Vercel, AWS, Docker, CI/CD, Firebase, Clerk",
-    gradient: "from-indigo-500 to-purple-500"
-  },
-  {
-    title: "ML/DL",
-    description: "LangChain, Scikit-Learn, NumPy, Pandas, TensorFlow, PyTorch, Core ML/DL Algorithms",
-    gradient: "from-fuchsia-500 to-violet-500"
-  }
+  { title: "Languages",            description: "Python · Java · C++",                                                        accent: "#6366f1" },
+  { title: "Frontend",             description: "React.js · TypeScript · JavaScript · Tailwind CSS · Three.js · Motion",      accent: "#818cf8" },
+  { title: "UI/UX Design",         description: "Figma · Wix Studio · Prototyping · Canva",                                   accent: "#a78bfa" },
+  { title: "Backend",              description: "Flask · Node.js · MongoDB · Supabase · Firebase",                            accent: "#6366f1" },
+  { title: "DevOps & Tools",       description: "Git · GitHub · Render · Vercel · AWS · Docker · CI/CD · Clerk",              accent: "#818cf8" },
+  { title: "AI / ML",              description: "LangChain · Scikit-Learn · NumPy · Pandas · TensorFlow · PyTorch",           accent: "#a78bfa" },
 ];
 
-// Main Skills Showcase Component
-export default function SkillsShowcase() {
-  return (
-    <div className="min-h-screen relative overflow-hidden">
-      <div className="relative z-10 p-4 sm:p-6 lg:p-8">
-        <div className="mx-auto max-w-7xl">
-          
-          {/* Header */}
-          <div className="mb-12 sm:mb-16 text-center">
-            <h1 className="mb-4 py-4 text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-fuchsia-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent tracking-wide">
-              My Skills
-            </h1>
-          </div>
+function SkillCard({ skill, index }) {
+  const [hovered, setHovered] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-          {/* Skills Grid */}
-          <div className="grid gap-6 sm:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-            {skills.map((skill, index) => (
-              <div
-                key={index}
-                className="opacity-0 animate-fadeInUp"
-                style={{
-                  animationDelay: `${index * 150}ms`,
-                  animationFillMode: 'both'
-                }}
-              >
-                <SkillCard skill={skill} index={index} />
-              </div>
-            ))}
-          </div>
-        </div>
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 16;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 16;
+    setMousePos({ x, y });
+  };
+
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => { setHovered(false); setMousePos({ x: 0, y: 0 }); }}
+      onMouseMove={handleMouseMove}
+      style={{
+        background: "#1c1c1c",
+        border: `1px solid ${hovered ? skill.accent + "50" : "#252525"}`,
+        borderRadius: 16,
+        padding: "32px 28px",
+        position: "relative",
+        overflow: "hidden",
+        cursor: "default",
+        transform: hovered
+          ? `perspective(800px) rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg) translateZ(10px)`
+          : "perspective(800px) rotateX(0) rotateY(0) translateZ(0)",
+        transition: hovered ? "none" : "transform 0.4s ease, border-color 0.25s, box-shadow 0.25s",
+        boxShadow: hovered ? `0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px ${skill.accent}30` : "none",
+        animationDelay: `${index * 100}ms`,
+      }}
+    >
+      {/* Top accent line */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          background: `linear-gradient(90deg, ${skill.accent}, transparent)`,
+          opacity: hovered ? 1 : 0.4,
+          transition: "opacity 0.3s",
+          borderRadius: "16px 16px 0 0",
+        }}
+      />
+
+      {/* Glow bg */}
+      {hovered && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(circle at ${((mousePos.x + 8) / 16) * 100}% ${((mousePos.y + 8) / 16) * 100}%, ${skill.accent}12 0%, transparent 70%)`,
+            pointerEvents: "none",
+          }}
+        />
+      )}
+
+      {/* Index number */}
+      <div
+        style={{
+          fontFamily: "'JetBrains Mono', monospace",
+          fontSize: 11,
+          color: skill.accent,
+          opacity: 0.6,
+          marginBottom: 16,
+          letterSpacing: "0.1em",
+        }}
+      >
+        {String(index + 1).padStart(2, "0")}
       </div>
-      
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fadeInUp {
-          animation: fadeInUp 0.6s ease-out;
-        }
-        
-        @media (prefers-reduced-motion: reduce) {
-          * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-          }
-        }
-      `}</style>
+
+      <h3
+        style={{
+          fontSize: "1.1rem",
+          fontWeight: 700,
+          color: "#f4f4f5",
+          marginBottom: 14,
+          letterSpacing: "-0.01em",
+        }}
+      >
+        {skill.title}
+      </h3>
+
+      <p
+        style={{
+          fontSize: 13.5,
+          color: "#71717a",
+          lineHeight: 1.7,
+          fontFamily: "'JetBrains Mono', monospace",
+        }}
+      >
+        {skill.description}
+      </p>
     </div>
+  );
+}
+
+export default function Skills() {
+  const [headerRef, headerVisible] = useReveal();
+  const [gridRef, gridVisible]     = useReveal();
+
+  return (
+    <section id="skills" style={{ padding: "100px 24px", maxWidth: 1200, margin: "0 auto" }}>
+      {/* Header */}
+      <div
+        ref={headerRef}
+        style={{
+          marginBottom: 56,
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? "translateY(0)" : "translateY(24px)",
+          transition: "all 0.6s ease",
+        }}
+      >
+        <span className="section-label">// skills</span>
+        <h2 className="section-title">Tech Stack</h2>
+        <div className="section-divider" />
+        <p className="section-subtitle">
+          Tools and technologies I work with across the full stack.
+        </p>
+      </div>
+
+      {/* Grid */}
+      <div
+        ref={gridRef}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 320px), 1fr))",
+          gap: 20,
+          opacity: gridVisible ? 1 : 0,
+          transform: gridVisible ? "translateY(0)" : "translateY(30px)",
+          transition: "all 0.7s ease",
+        }}
+      >
+        {skills.map((skill, i) => (
+          <SkillCard key={skill.title} skill={skill} index={i} />
+        ))}
+      </div>
+    </section>
   );
 }
