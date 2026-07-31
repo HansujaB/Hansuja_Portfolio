@@ -164,7 +164,7 @@ export default function Navbar() {
             {/* Resume CTA */}
             <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="desktop-nav">
               <a
-                href="https://drive.google.com/file/d/1bBHzyh357Y8IMnHIVttS8v_jjWWZiun3/view?usp=sharing"
+                href="https://drive.google.com/file/d/1vl6ShhXvit1QNmCbsa_MRvDEJKanT1DD/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-accent"
