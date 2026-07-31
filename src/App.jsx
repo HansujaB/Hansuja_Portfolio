@@ -1,43 +1,62 @@
-import { useState } from 'react'
-import './App.css'
-import Home from './components/Home'
-import { NavbarDemo } from "./components/Navbar";
-import { TypewriterEffectDemo } from "./components/TypewriterIntro";
-import SkillsShowcase from './components/Skills';
-import ProjectsCarousel from './components/Projects';
-import ContactSection from './components/Contact';
-import { BackgroundBoxesDemo } from './components/About';
+import "./index.css";
+import "./App.css";
+
+import Navbar          from "./components/Navbar";
+import HeroAbout       from "./components/HeroAbout";
+import Skills          from "./components/Skills";
+import Projects        from "./components/Projects";
+import Achievements    from "./components/Achievements";
+import Research        from "./components/Research";
+import OpenSource      from "./components/OpenSource";
+import GitHubActivity  from "./components/GitHubActivity";
+import Contact         from "./components/Contact";
 
 function App() {
   return (
     <>
-      <Home />
-      <div className='fixed top-0 left-0 w-full z-50 py-6 text-lg bg-transparent'>
-        <NavbarDemo />
-      </div>
-      
-      {/* Add proper section wrappers with IDs */}
-      <section id="home">
-        <TypewriterEffectDemo />
-      </section>
-      
-      <section id="about">
-        <BackgroundBoxesDemo />
-      </section>
-      
-      <section id="skills">
-        <SkillsShowcase />
-      </section>
-      
-      <section id="projects">
-        <ProjectsCarousel />
-      </section>
-      
-      <section id="contact">
-        <ContactSection />
-      </section>
+      {/* Dot-grid background — fixed, behind everything */}
+      <div className="dot-grid" />
+
+      {/* Navbar — fixed at top */}
+      <Navbar />
+
+      {/* Main content */}
+      <main>
+        {/* Hero + About merged */}
+        <HeroAbout />
+
+        {/* Skills */}
+        <section id="skills">
+          <Skills />
+        </section>
+
+        {/* Projects */}
+        <Projects />
+
+        {/* Achievements */}
+        <Achievements />
+
+        {/* Thin divider */}
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+          <div style={{ height: 1, background: "#1a1a1a" }} />
+        </div>
+
+        {/* Research */}
+        <section id="experience">
+          <Research />
+        </section>
+
+        {/* Open Source */}
+        <OpenSource />
+
+        {/* GitHub Activity */}
+        <GitHubActivity />
+
+        {/* Contact */}
+        <Contact />
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
