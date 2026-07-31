@@ -14,14 +14,118 @@ function useReveal() {
   return [ref, visible];
 }
 
+/* ── Tech items: { name, icon (SVG path from simpleicons), color } ── */
 const skills = [
-  { title: "Languages",            description: "Python · Java · C++",                                                        accent: "#6366f1" },
-  { title: "Frontend",             description: "React.js · TypeScript · JavaScript · Tailwind CSS · Three.js · Motion",      accent: "#818cf8" },
-  { title: "UI/UX Design",         description: "Figma · Wix Studio · Prototyping · Canva",                                   accent: "#a78bfa" },
-  { title: "Backend",              description: "Flask · Node.js · MongoDB · Supabase · Firebase",                            accent: "#6366f1" },
-  { title: "DevOps & Tools",       description: "Git · GitHub · Render · Vercel · AWS · Docker · CI/CD · Clerk",              accent: "#818cf8" },
-  { title: "AI / ML",              description: "LangChain · Scikit-Learn · NumPy · Pandas · TensorFlow · PyTorch",           accent: "#a78bfa" },
+  {
+    title: "Languages",
+    accent: "#6366f1",
+    items: [
+      { name: "Python",     icon: "https://cdn.simpleicons.org/python/3776AB",     color: "#3776AB" },
+      { name: "Java",       icon: "https://cdn.simpleicons.org/openjdk/ED8B00",    color: "#ED8B00" },
+      { name: "Rust",       icon: "https://cdn.simpleicons.org/rust/ffffff",       color: "#ffffff" },
+      { name: "TypeScript", icon: "https://cdn.simpleicons.org/typescript/3178C6", color: "#3178C6" },
+    ],
+  },
+  {
+    title: "Frontend",
+    accent: "#818cf8",
+    items: [
+      { name: "React",     icon: "https://cdn.simpleicons.org/react/61DAFB",      color: "#61DAFB" },
+      { name: "Next.js",   icon: "https://cdn.simpleicons.org/nextdotjs/ffffff",   color: "#ffffff" },
+      { name: "Three.js",  icon: "https://cdn.simpleicons.org/threedotjs/ffffff",  color: "#ffffff" },
+      { name: "Tailwind",  icon: "https://cdn.simpleicons.org/tailwindcss/06B6D4", color: "#06B6D4" },
+      { name: "Motion",    icon: "https://cdn.simpleicons.org/framer/0055FF",      color: "#0055FF" },
+    ],
+  },
+  {
+    title: "UI / UX Design",
+    accent: "#a78bfa",
+    items: [
+      { name: "Figma",   icon: "https://cdn.simpleicons.org/figma/F24E1E",       color: "#F24E1E" },
+      { name: "Canva",   icon: "https://cdn.simpleicons.org/canva/00C4CC",        color: "#00C4CC" },
+    ],
+  },
+  {
+    title: "Backend",
+    accent: "#6366f1",
+    items: [
+      { name: "FastAPI",   icon: "https://cdn.simpleicons.org/fastapi/009688",    color: "#009688" },
+      { name: "Node.js",   icon: "https://cdn.simpleicons.org/nodedotjs/339933",  color: "#339933" },
+      { name: "MongoDB",   icon: "https://cdn.simpleicons.org/mongodb/47A248",    color: "#47A248" },
+      { name: "Firebase",  icon: "https://cdn.simpleicons.org/firebase/FFCA28",   color: "#FFCA28" },
+      { name: "Supabase",  icon: "https://cdn.simpleicons.org/supabase/3ECF8E",   color: "#3ECF8E" },
+    ],
+  },
+  {
+    title: "DevOps & Tools",
+    accent: "#818cf8",
+    items: [
+      { name: "Git",      icon: "https://cdn.simpleicons.org/git/F05032",         color: "#F05032" },
+      { name: "Docker",   icon: "https://cdn.simpleicons.org/docker/2496ED",      color: "#2496ED" },
+      { name: "GitHub",   icon: "https://cdn.simpleicons.org/github/ffffff",      color: "#ffffff" },
+      { name: "Vercel",   icon: "https://cdn.simpleicons.org/vercel/ffffff",      color: "#ffffff" },
+      { name: "AWS",      icon: "https://cdn.simpleicons.org/amazonwebservices/FF9900", color: "#FF9900" },
+    ],
+  },
+  {
+    title: "AI / ML",
+    accent: "#a78bfa",
+    items: [
+      { name: "LangChain",    icon: "https://cdn.simpleicons.org/langchain/ffffff",       color: "#ffffff" },
+      { name: "TensorFlow",   icon: "https://cdn.simpleicons.org/tensorflow/FF6F00",      color: "#FF6F00" },
+      { name: "PyTorch",      icon: "https://cdn.simpleicons.org/pytorch/EE4C2C",         color: "#EE4C2C" },
+      { name: "scikit-learn", icon: "https://cdn.simpleicons.org/scikitlearn/F7931E",     color: "#F7931E" },
+      { name: "NumPy",        icon: "https://cdn.simpleicons.org/numpy/013243",           color: "#4dabcf" },
+      { name: "Pandas",       icon: "https://cdn.simpleicons.org/pandas/150458",          color: "#e70488" },
+    ],
+  },
 ];
+
+function TechChip({ item }) {
+  const [hovered, setHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  return (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 8,
+        padding: "7px 14px",
+        background: hovered ? item.color + "18" : "#0d0d0d",
+        border: `1px solid ${hovered ? item.color + "66" : "#252525"}`,
+        borderRadius: 8,
+        cursor: "default",
+        transition: "all 0.2s ease",
+        transform: hovered ? "translateY(-2px)" : "translateY(0)",
+        boxShadow: hovered ? `0 4px 16px ${item.color}22` : "none",
+      }}
+    >
+      {!imgError ? (
+        <img
+          src={item.icon}
+          alt={item.name}
+          width={16}
+          height={16}
+          style={{ objectFit: "contain", flexShrink: 0, filter: "brightness(0.9)" }}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <span style={{ width: 14, height: 14, display: "inline-block",
+          background: item.color + "44", borderRadius: "50%", flexShrink: 0 }} />
+      )}
+      <span style={{
+        fontSize: 14,
+        fontWeight: 600,
+        color: hovered ? "#f4f4f4" : "#c4c4c8",
+        fontFamily: "'JetBrains Mono', monospace",
+        letterSpacing: "0.02em",
+        transition: "color 0.2s",
+      }}>{item.name}</span>
+    </div>
+  );
+}
 
 function SkillCard({ skill, index }) {
   const [hovered, setHovered] = useState(false);
@@ -40,10 +144,10 @@ function SkillCard({ skill, index }) {
       onMouseLeave={() => { setHovered(false); setMousePos({ x: 0, y: 0 }); }}
       onMouseMove={handleMouseMove}
       style={{
-        background: "#1c1c1c",
-        border: `1px solid ${hovered ? skill.accent + "50" : "#252525"}`,
+        background: "#111",
+        border: `1px solid ${hovered ? skill.accent + "50" : "#1e1e1e"}`,
         borderRadius: 16,
-        padding: "32px 28px",
+        padding: "28px 24px",
         position: "relative",
         overflow: "hidden",
         cursor: "default",
@@ -52,19 +156,14 @@ function SkillCard({ skill, index }) {
           : "perspective(800px) rotateX(0) rotateY(0) translateZ(0)",
         transition: hovered ? "none" : "transform 0.4s ease, border-color 0.25s, box-shadow 0.25s",
         boxShadow: hovered ? `0 16px 48px rgba(0,0,0,0.4), 0 0 0 1px ${skill.accent}30` : "none",
-        animationDelay: `${index * 100}ms`,
       }}
     >
       {/* Top accent line */}
       <div
         style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 3,
+          position: "absolute", top: 0, left: 0, right: 0, height: 2,
           background: `linear-gradient(90deg, ${skill.accent}, transparent)`,
-          opacity: hovered ? 1 : 0.4,
+          opacity: hovered ? 1 : 0.35,
           transition: "opacity 0.3s",
           borderRadius: "16px 16px 0 0",
         }}
@@ -74,50 +173,36 @@ function SkillCard({ skill, index }) {
       {hovered && (
         <div
           style={{
-            position: "absolute",
-            inset: 0,
-            background: `radial-gradient(circle at ${((mousePos.x + 8) / 16) * 100}% ${((mousePos.y + 8) / 16) * 100}%, ${skill.accent}12 0%, transparent 70%)`,
+            position: "absolute", inset: 0,
+            background: `radial-gradient(circle at ${((mousePos.x + 8) / 16) * 100}% ${((mousePos.y + 8) / 16) * 100}%, ${skill.accent}10 0%, transparent 70%)`,
             pointerEvents: "none",
           }}
         />
       )}
 
-      {/* Index number */}
-      <div
-        style={{
+      {/* Index + Title row */}
+      <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 18 }}>
+        <span style={{
           fontFamily: "'JetBrains Mono', monospace",
           fontSize: 11,
           color: skill.accent,
           opacity: 0.6,
-          marginBottom: 16,
           letterSpacing: "0.1em",
-        }}
-      >
-        {String(index + 1).padStart(2, "0")}
-      </div>
-
-      <h3
-        style={{
-          fontSize: "1.1rem",
+        }}>{String(index + 1).padStart(2, "0")}</span>
+        <h3 style={{
+          fontSize: "1rem",
           fontWeight: 700,
           color: "#f4f4f5",
-          marginBottom: 14,
           letterSpacing: "-0.01em",
-        }}
-      >
-        {skill.title}
-      </h3>
+        }}>{skill.title}</h3>
+      </div>
 
-      <p
-        style={{
-          fontSize: 13.5,
-          color: "#71717a",
-          lineHeight: 1.7,
-          fontFamily: "'JetBrains Mono', monospace",
-        }}
-      >
-        {skill.description}
-      </p>
+      {/* Tech chips */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+        {skill.items.map((item) => (
+          <TechChip key={item.name} item={item} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -165,3 +250,4 @@ export default function Skills() {
     </section>
   );
 }
+

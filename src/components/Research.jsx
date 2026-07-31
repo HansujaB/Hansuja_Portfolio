@@ -1,20 +1,18 @@
 import { useRef, useEffect, useState } from "react";
 import { ExternalLink, Github, BookOpen, Monitor, FileText } from "lucide-react";
 
-// ── Research paper data — fill in your real details ────────────
+// ── Research paper data ────────────
 const paper = {
-  title: "Your Research Paper Title Here",
-  authors: "Hansuja Budhiraja, Co-Author Name",
-  venue: "Conference / Journal Name · Year",
+  title: "Empirical Enhancements to Hybrid AES-ECC Steganography using USC-SIPI dataset",
+  authors: "Hansuja Budhiraja,Kiran Malik",
+  venue: "WcCST 2026 · IEEE · Published",
   abstract:
-    "A brief abstract or description of your research paper. Replace this with your actual abstract — describe the problem, methodology, and key findings in 2–3 sentences.",
-  tags: ["AI/ML", "Deep Learning", "NLP" /* update tags */],
-  // ── Fill in these links ───────────────────────────────────────
-  doiLink:    "#",   // e.g. "https://doi.org/10.xxxx/xxxxx"
-  githubLink: "#",   // e.g. "https://github.com/HansujaB/..."
-  liveLink:   "#",   // live demo / showcase URL
-  // ── Set this to your actual live demo URL ─────────────────────
-  iframeUrl:  "",    // e.g. "https://your-demo.vercel.app"
+    "A secure communication framework integrating AES-128-CBC payload encryption, ECC via SECP256R1 for key exchange, inverted LSB embedding in the RGB color space, and lossless WebP compression for efficient transmission.",
+  tags: ["Cryptography", "Steganography", "Security", "Image Processing"],
+  doiLink: "https://ieeexplore.ieee.org/document/11496298/",
+  githubLink: "https://github.com/HansujaB/StegoSheild",
+  liveLink: "https://stego-sheild.vercel.app/",
+  iframeUrl: "https://stego-sheild.vercel.app/",
 };
 
 function useReveal() {
@@ -51,9 +49,6 @@ export default function Research() {
         <span className="section-label">// research</span>
         <h2 className="section-title">Research</h2>
         <div className="section-divider" />
-        <p className="section-subtitle">
-          Academic work at the intersection of AI and real-world applications.
-        </p>
       </div>
 
       {/* Paper card */}

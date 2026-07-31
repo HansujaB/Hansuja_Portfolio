@@ -6,67 +6,56 @@ const achievements = [
   {
     id: 1,
     icon: <Trophy size={28} />,
-    title: "Hackathon Winner — GDSC",
-    subtitle: "Google Developer Student Clubs",
+    title: "UBER SHE++ 2026",
+    subtitle: "UBER Bangalore",
     description:
-      "Built FinBuddy, a full-stack FinTech application, and won the GDSC Hackathon. Competed against 100+ teams across IGDTUW.",
-    date: "2024",
+      "Selected among top 63 students to attend Uber She++ Event and Hackathon, Advanced to Top 7 teams",
+    date: "March 2026",
     color: "#f59e0b",
     image: null,
   },
   {
     id: 2,
     icon: <Medal size={28} />,
-    title: "Achievement Title Here",
-    subtitle: "Event / Organisation",
+    title: "1st Postition AI/ML Circle",
+    subtitle: "Google Developer Group IGDTUW",
     description:
-      "Description of this achievement — replace with your real win, rank, or certification.",
-    date: "2024",
+      "Best Mentee in over 200 freshmen built projets around Core ML algoritms.",
+    date: "Jan 2025",
     color: "#6366f1",
     image: null,
   },
   {
     id: 3,
-    icon: <Award size={28} />,
-    title: "Achievement Title Here",
-    subtitle: "Event / Organisation",
+    icon: <Trophy size={28} />,
+    title: "Hack'24 Winner",
+    subtitle: "IIIT Delhi",
     description:
-      "Description of this achievement — replace with your real win, rank, or certification.",
-    date: "2024",
-    color: "#22c55e",
+      "Built a platform for people to analyse their spendings and analysse drop in credit score.",
+    date: "March 2025",
+    color: "#f59e0b",
     image: null,
   },
   {
     id: 4,
     icon: <Star size={28} />,
-    title: "Achievement Title Here",
-    subtitle: "Event / Organisation",
+    title: "National Semi Finalist",
+    subtitle: "Flipkart Grid '25 & '26",
     description:
-      "Description of this achievement — replace with your real win, rank, or certification.",
-    date: "2023",
+      "Got selected for National Semi Finals for Flipkart Grid for 2 consecutie years",
+    date: "2026",
     color: "#ec4899",
     image: null,
   },
   {
     id: 5,
     icon: <Zap size={28} />,
-    title: "20+ Competitions",
-    subtitle: "Hackathons & Coding Events",
+    title: "2nd Postition",
+    subtitle: "IEEE WIENOVA 2.0",
     description:
-      "Participated in 20+ technical competitions including hackathons, coding contests, and design challenges across India.",
-    date: "2023–2025",
+      "Developed an AI-powered web app to monitor productivty fluctuation throughout the day and give suggestions to improve it.",
+    date: "Feb 2025",
     color: "#6366f1",
-    image: null,
-  },
-  {
-    id: 6,
-    icon: <Users size={28} />,
-    title: "Achievement Title Here",
-    subtitle: "Event / Organisation",
-    description:
-      "Description of this achievement — replace with your real win, rank, or certification.",
-    date: "2024",
-    color: "#8b5cf6",
     image: null,
   },
 ];
@@ -80,51 +69,66 @@ function AchievementCard({ achievement }) {
       onMouseLeave={() => setHovered(false)}
       style={{
         flexShrink: 0,
-        width: 480,
+        width: 520,
         display: "flex",
         alignItems: "stretch",
-        background: "#1c1c1c",
-        border: `1px solid ${hovered ? "#333" : "#252525"}`,
+        background: hovered ? "#1e1e1e" : "#161616",
+        border: `1.5px solid ${hovered ? achievement.color + "66" : achievement.color + "22"}`,
         borderRadius: 20,
         overflow: "hidden",
         transition: "all 0.3s ease",
-        boxShadow: hovered ? "0 20px 60px rgba(0,0,0,0.4)" : "none",
-        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        boxShadow: hovered
+          ? `0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px ${achievement.color}22, 0 0 40px ${achievement.color}12`
+          : "0 4px 20px rgba(0,0,0,0.25)",
+        transform: hovered ? "translateY(-6px)" : "translateY(0)",
       }}
     >
-      {/* Left colour strip + icon */}
+      {/* Left accent strip */}
       <div
         style={{
-          width: 90,
-          background: `${achievement.color}14`,
-          borderRight: `1px solid ${achievement.color}30`,
+          width: 6,
+          background: hovered
+            ? `linear-gradient(180deg, ${achievement.color}, ${achievement.color}44)`
+            : `linear-gradient(180deg, ${achievement.color}88, ${achievement.color}22)`,
+          flexShrink: 0,
+          transition: "background 0.3s",
+        }}
+      />
+
+      {/* Icon + date column */}
+      <div
+        style={{
+          width: 80,
+          background: achievement.color + "0d",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 12,
+          gap: 10,
           padding: "24px 8px",
           flexShrink: 0,
         }}
       >
-        <div style={{ color: achievement.color }}>{achievement.icon}</div>
-        <div
-          style={{
-            width: 3,
-            height: 32,
-            background: achievement.color,
-            borderRadius: 99,
-            opacity: 0.5,
-          }}
-        />
+        <div style={{
+          color: achievement.color,
+          background: achievement.color + "18",
+          padding: 12,
+          borderRadius: 14,
+          display: "flex",
+          boxShadow: hovered ? `0 0 20px ${achievement.color}44` : "none",
+          transition: "box-shadow 0.3s",
+        }}>
+          {achievement.icon}
+        </div>
         <span
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 10,
-            color: "#71717a",
+            fontSize: 9,
+            color: achievement.color,
             writingMode: "vertical-lr",
             textTransform: "uppercase",
-            letterSpacing: "0.1em",
+            letterSpacing: "0.12em",
+            opacity: 0.7,
           }}
         >
           {achievement.date}
@@ -132,32 +136,33 @@ function AchievementCard({ achievement }) {
       </div>
 
       {/* Right content */}
-      <div style={{ padding: "28px 28px 28px 24px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+      <div style={{ padding: "28px 28px 28px 22px", display: "flex", flexDirection: "column", justifyContent: "center", flex: 1 }}>
         <span
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 11,
+            fontSize: 10,
             color: achievement.color,
-            letterSpacing: "0.08em",
+            letterSpacing: "0.12em",
             textTransform: "uppercase",
             marginBottom: 8,
+            opacity: 0.9,
           }}
         >
           {achievement.subtitle}
         </span>
         <h3
           style={{
-            fontSize: "1.15rem",
-            fontWeight: 700,
+            fontSize: "1.25rem",
+            fontWeight: 800,
             color: "#f4f4f5",
-            marginBottom: 12,
-            letterSpacing: "-0.01em",
-            lineHeight: 1.3,
+            marginBottom: 10,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.25,
           }}
         >
           {achievement.title}
         </h3>
-        <p style={{ fontSize: 13.5, color: "#71717a", lineHeight: 1.65 }}>
+        <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.7 }}>
           {achievement.description}
         </p>
       </div>
@@ -166,10 +171,15 @@ function AchievementCard({ achievement }) {
 }
 
 export default function Achievements() {
-  const trackRef   = useRef(null);
+  const trackRef    = useRef(null);
+  const wrapRef     = useRef(null);
   const [paused, setPaused] = useState(false);
   const [headerRef, setHeaderRef] = useState(null);
   const [headerVisible, setHeaderVisible] = useState(false);
+
+  // pos is tracked in a ref so the rAF loop always has the latest value
+  const posRef      = useRef(0);
+  const dragRef     = useRef({ active: false, startX: 0, startPos: 0 });
 
   // Scroll reveal for header
   useEffect(() => {
@@ -182,27 +192,58 @@ export default function Achievements() {
     return () => obs.disconnect();
   }, [headerRef]);
 
-  // Auto-scroll animation
+  // Auto-scroll animation loop
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
     let animId;
-    let pos = 0;
-    const speed = 0.5; // px per frame
+    const speed = 1.4; // px per frame — faster than before
 
-    const half = track.scrollWidth / 2;
+    function getHalf() { return track.scrollWidth / 2; }
 
     function step() {
-      if (!paused) {
-        pos += speed;
-        if (pos >= half) pos = 0;
-        track.style.transform = `translateX(-${pos}px)`;
+      if (!paused && !dragRef.current.active) {
+        posRef.current += speed;
+        if (posRef.current >= getHalf()) posRef.current = 0;
+        track.style.transform = `translateX(-${posRef.current}px)`;
       }
       animId = requestAnimationFrame(step);
     }
     animId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animId);
   }, [paused]);
+
+  // Mouse-wheel / trackpad horizontal scroll
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const track = trackRef.current;
+    if (!wrap || !track) return;
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      const half = track.scrollWidth / 2;
+      posRef.current = Math.max(0, Math.min(posRef.current + e.deltaY * 0.6, half - 1));
+      track.style.transform = `translateX(-${posRef.current}px)`;
+    };
+    wrap.addEventListener("wheel", onWheel, { passive: false });
+    return () => wrap.removeEventListener("wheel", onWheel);
+  }, []);
+
+  // Drag-to-scroll
+  const onPointerDown = (e) => {
+    dragRef.current = { active: true, startX: e.clientX, startPos: posRef.current };
+    e.currentTarget.setPointerCapture(e.pointerId);
+  };
+  const onPointerMove = (e) => {
+    if (!dragRef.current.active) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const delta = dragRef.current.startX - e.clientX;
+    const half = track.scrollWidth / 2;
+    posRef.current = Math.max(0, Math.min(dragRef.current.startPos + delta, half - 1));
+    track.style.transform = `translateX(-${posRef.current}px)`;
+  };
+  const onPointerUp = () => { dragRef.current.active = false; };
 
   // Duplicate array for infinite loop
   const doubled = [...achievements, ...achievements];
@@ -239,9 +280,14 @@ export default function Achievements() {
 
       {/* Scrolling track */}
       <div
+        ref={wrapRef}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
-        style={{ overflow: "hidden", width: "100%", cursor: "grab" }}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+        style={{ overflow: "hidden", width: "100%", cursor: "grab", userSelect: "none" }}
       >
         <div
           ref={trackRef}
@@ -265,11 +311,12 @@ export default function Achievements() {
           textAlign: "center",
           marginTop: 24,
           fontSize: 12,
-          color: "#71717a",
+          color: "#f4f4f4",
+          opacity: 0.35,
           fontFamily: "'JetBrains Mono', monospace",
         }}
       >
-        hover to pause
+        scroll · drag · hover to pause
       </p>
     </section>
   );
