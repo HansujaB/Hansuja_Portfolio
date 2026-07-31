@@ -17,10 +17,10 @@ const achievements = [
   {
     id: 2,
     icon: <Medal size={28} />,
-    title: "1st Postition AI/ML Circle",
+    title: "1st Position AI/ML Circle",
     subtitle: "Google Developer Group IGDTUW",
     description:
-      "Best Mentee in over 200 freshmen built projets around Core ML algoritms.",
+      "Best Mentee in over 200 freshmen; built projects around Core ML algorithms.",
     date: "Jan 2025",
     color: "#6366f1",
     image: null,
@@ -31,7 +31,7 @@ const achievements = [
     title: "Hack'24 Winner",
     subtitle: "IIIT Delhi",
     description:
-      "Built a platform for people to analyse their spendings and analysse drop in credit score.",
+      "Built a platform for people to analyse their spendings and the drop in credit score.",
     date: "March 2025",
     color: "#f59e0b",
     image: null,
@@ -42,7 +42,7 @@ const achievements = [
     title: "National Semi Finalist",
     subtitle: "Flipkart Grid '25 & '26",
     description:
-      "Got selected for National Semi Finals for Flipkart Grid for 2 consecutie years",
+      "Got selected for National Semi Finals for Flipkart Grid for 2 consecutive years",
     date: "2026",
     color: "#ec4899",
     image: null,
@@ -50,10 +50,10 @@ const achievements = [
   {
     id: 5,
     icon: <Zap size={28} />,
-    title: "2nd Postition",
+    title: "2nd Position",
     subtitle: "IEEE WIENOVA 2.0",
     description:
-      "Developed an AI-powered web app to monitor productivty fluctuation throughout the day and give suggestions to improve it.",
+      "Developed an AI-powered web app to monitor productivity fluctuation throughout the day and give suggestions to improve it.",
     date: "Feb 2025",
     color: "#6366f1",
     image: null,
