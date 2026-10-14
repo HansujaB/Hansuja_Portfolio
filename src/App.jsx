@@ -11,6 +11,8 @@ import OpenSource      from "./components/OpenSource";
 import GitHubActivity  from "./components/GitHubActivity";
 import Contact         from "./components/Contact";
 
+import PixelCursor from "./components/PixelCursor";
+
 function App() {
   return (
     <>
@@ -19,6 +21,7 @@ function App() {
 
       {/* Navbar — fixed at top */}
       <Navbar />
+      <PixelCursor />
 
       {/* Main content */}
       <main>
